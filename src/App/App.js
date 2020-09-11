@@ -1,12 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <h2>INSIDE APP COMPONENT</h2>
+        <button className="btn btn-info">I am a button</button>
+      </div>
+    );
+  }
+}
+
+export default App;
+
+/*
+import React from 'react';
+import './App.scss';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -24,3 +39,4 @@ function App() {
 }
 
 export default App;
+*/
