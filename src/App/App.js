@@ -80,8 +80,6 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <h2>INSIDE APP COMPONENT</h2>
-        <button className="btn btn-info">I am a button</button>
         <BrowserRouter>
           <React.Fragment>
             <MyNavbar authed={authed} level={level} />

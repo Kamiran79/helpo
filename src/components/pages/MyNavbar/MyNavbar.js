@@ -13,6 +13,8 @@ import {
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import './MyNavbar.scss';
+
 class MyNavbar extends React.Component {
   static propTypes = {
     authed: PropTypes.bool.isRequired,
@@ -59,10 +61,10 @@ class MyNavbar extends React.Component {
         return (
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/home">Home</NavLink>
+              <NavLink className="myNav" tag={RRNavLink} to="/home">Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink onClick={this.logMeOut}>Log Me Out</NavLink>
+              <NavLink className="myNav" onClick={this.logMeOut}>Log Me Out</NavLink>
             </NavItem>
           </Nav>
         );
@@ -73,8 +75,8 @@ class MyNavbar extends React.Component {
 
     return (
       <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">HELPO</NavbarBrand>
+        <Navbar className="myNavbar" color="light" light expand="md">
+          <NavbarBrand className="myNav" href="/">HELPO</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={isOpen} navbar>
             {buildNavbar()}
