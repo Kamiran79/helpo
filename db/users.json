@@ -1,0 +1,26 @@
+{
+  "user1": {
+    "uid": "lysPjDu7HyPRBLhOYeZ44Ha0YoU2",
+    "name": "Kamiran",
+    "level": "user",
+    "department": "R&D"
+  },
+  "user2": {
+    "uid": "user2",
+    "name": "Kmiran Admin",
+    "level": "admin",
+    "department": "R&D"
+  },
+  "user3": {
+    "uid": "user3",
+    "name": "just a user",
+    "level": "user",
+    "department": "Sales"
+  },
+  "user4": {
+    "uid": "user4",
+    "name": "just an admin",
+    "level": "admin",
+    "department": "IT"
+  }
+}

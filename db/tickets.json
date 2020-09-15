@@ -1,0 +1,62 @@
+{
+  "ticket1": {
+    "cUid": "user1",
+    "issueTitle": "",
+    "category": "",
+    "cDate": "",
+    "details": "",
+    "to-address": "",
+    "status": "",
+    "priority": "",
+    "department": "",
+    "uDate": "",
+    "assignee": "user name",
+    "resolution": "user name",
+    "author": "creater name"
+  },
+  "ticket2": {
+    "cUid": "user2",
+    "issueTitle": "",
+    "category": "",
+    "cDate": "",
+    "details": "",
+    "to-address": "",
+    "status": "",
+    "priority": "",
+    "department": "",
+    "uDate": "",                                
+    "assignee": "user name",
+    "resolution": "user name",
+    "author": "creater name"
+  },
+  "ticket3": {
+    "cUid": "user3",
+    "issueTitle": "",
+    "category": "",
+    "cDate": "",
+    "details": "",
+    "to-address": "",
+    "status": "",
+    "priority": "",
+    "department": "",
+    "uDate": "",                                
+    "assignee": "user name",
+    "resolution": "user name",
+    "author": "creater name"
+  },
+  "ticket4": {
+    "cUid": "user4",
+    "issueTitle": "issue title go here",
+    "category": "",
+    "cDate": "",
+    "details": "",
+    "to-address": "",
+    "status": "Resloved",
+    "priority": "",
+    "department": "",
+    "uDate": "",                                
+    "assignee": "user name",
+    "resolution": "user name",
+    "author": "creater name"
+  }
+}
