@@ -14,6 +14,7 @@ import MyNavbar from '../components/pages/MyNavbar/MyNavbar';
 
 import Admin from '../components/pages/Admin/Admin';
 
+import usersData from '../helpers/data/usersData';
 import fbConnection from '../helpers/data/connection';
 
 import './App.scss';
@@ -37,12 +38,33 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 class App extends React.Component {
   state = {
     authed: false,
+    level: '',
   }
+
+  checkUserRoleRight = (uid) => {
+    usersData.getUserByUid(uid)
+      .then((res) => {
+        console.warn('found what return then after that the board', res[0].uid);
+        if (uid === res[0].uid) {
+          console.warn('found what return then after that the board', res[0]);
+          if (res[0].level === 'user') {
+            this.setState({ level: 'user' });
+          } else if (res[0].level === 'admin') {
+            this.setState({ level: 'admin' });
+          }
+          // this.setState({ authed: true, flag: false });
+        } else {
+          this.setState({ level: '' });
+        }
+      })
+      .catch((err) => console.error('get user error', err));
+  };
 
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ authed: true });
+        this.checkUserRoleRight(user.uid);
       } else {
         this.setState({ authed: false });
       }
@@ -54,7 +76,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed } = this.state;
+    const { authed, level } = this.state;
 
     return (
       <div className="App">
@@ -62,7 +84,7 @@ class App extends React.Component {
         <button className="btn btn-info">I am a button</button>
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar authed={authed} />
+            <MyNavbar authed={authed} level={level} />
             <div className="container">
               <Switch>
                 <PrivateRoute path="/home" component={Home} authed={authed} />
