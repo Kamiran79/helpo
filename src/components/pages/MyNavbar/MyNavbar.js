@@ -16,6 +16,7 @@ import 'firebase/auth';
 class MyNavbar extends React.Component {
   static propTypes = {
     authed: PropTypes.bool.isRequired,
+    level: PropTypes.string.isRequired,
   }
 
   state = {
@@ -36,9 +37,9 @@ class MyNavbar extends React.Component {
     const { isOpen } = this.state;
 
     const buildNavbar = () => {
-      const { authed } = this.props;
+      const { authed, level } = this.props;
 
-      if (authed) {
+      if (authed && level === 'admin') {
         return (
             <Nav className="ml-auto" navbar>
               <NavItem>
@@ -51,6 +52,19 @@ class MyNavbar extends React.Component {
                 <NavLink onClick={this.logMeOut}>Log Me Out</NavLink>
               </NavItem>
             </Nav>
+        );
+      }
+
+      if (authed && level === 'user') {
+        return (
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink tag={RRNavLink} to="/home">Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={this.logMeOut}>Log Me Out</NavLink>
+            </NavItem>
+          </Nav>
         );
       }
 
