@@ -13,16 +13,29 @@ import {
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import authData from '../../../helpers/data/authData';
+
 import './MyNavbar.scss';
 
 class MyNavbar extends React.Component {
   static propTypes = {
     authed: PropTypes.bool.isRequired,
     level: PropTypes.string.isRequired,
+    userPhoto: PropTypes.string.isRequired,
   }
 
   state = {
     isOpen: false,
+    userPhoto: '',
+  }
+
+  getUserObject = () => {
+    const userObj = authData.getUser();
+    console.warn('try get user object ', userObj);
+  };
+
+  componentDidMount() {
+    this.getUserObject();
   }
 
   logMeOut = (e) => {
@@ -39,7 +52,7 @@ class MyNavbar extends React.Component {
     const { isOpen } = this.state;
 
     const buildNavbar = () => {
-      const { authed, level } = this.props;
+      const { authed, level, userPhoto } = this.props;
 
       if (authed && level === 'admin') {
         return (
@@ -51,7 +64,7 @@ class MyNavbar extends React.Component {
                 <NavLink tag={RRNavLink} to="/admin">Admin</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink onClick={this.logMeOut}>Log Me Out</NavLink>
+                <NavLink onClick={this.logMeOut}><img src={userPhoto} className="thumbnail" alt="" /> <i class="fas fa-sign-out-alt"></i></NavLink>
               </NavItem>
             </Nav>
         );
@@ -64,7 +77,13 @@ class MyNavbar extends React.Component {
               <NavLink className="myNav" tag={RRNavLink} to="/home">Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="myNav" onClick={this.logMeOut}>Log Me Out</NavLink>
+              <NavLink className="myNav" tag={RRNavLink} to="/tickets">Tickets</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="myNav" tag={RRNavLink} to="/kBase"><i class="fas fa-server"></i></NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="myNav" onClick={this.logMeOut}> <i class="fas fa-sign-out-alt"></i></NavLink>
             </NavItem>
           </Nav>
         );

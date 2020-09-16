@@ -11,10 +11,13 @@ import 'firebase/auth';
 import Auth from '../components/pages/Auth/Auth';
 import Home from '../components/pages/Home/Home';
 import MyNavbar from '../components/pages/MyNavbar/MyNavbar';
+import Tickets from '../components/pages/Tickets/Tickets';
+import KBase from '../components/pages/KBase/KBase';
 
 import Admin from '../components/pages/Admin/Admin';
 
 import usersData from '../helpers/data/usersData';
+import authData from '../helpers/data/authData';
 import fbConnection from '../helpers/data/connection';
 
 import './App.scss';
@@ -39,14 +42,21 @@ class App extends React.Component {
   state = {
     authed: false,
     level: '',
+    userPhoto: '',
   }
+
+  getUserObject = () => {
+    const userObj = authData.getUser();
+    // console.warn(userObj.photoURL);
+    this.setState({ userPhoto: userObj.photoURL });
+  };
 
   checkUserRoleRight = (uid) => {
     usersData.getUserByUid(uid)
       .then((res) => {
-        console.warn('found what return then after that the board', res[0].uid);
+        // console.warn('found what return then after that the board', res[0].uid);
         if (uid === res[0].uid) {
-          console.warn('found what return then after that the board', res[0]);
+          // console.warn('found what return then after that the board', res[0]);
           if (res[0].level === 'user') {
             this.setState({ level: 'user' });
           } else if (res[0].level === 'admin') {
@@ -65,6 +75,7 @@ class App extends React.Component {
       if (user) {
         this.setState({ authed: true });
         this.checkUserRoleRight(user.uid);
+        this.getUserObject();
       } else {
         this.setState({ authed: false });
       }
@@ -76,16 +87,18 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed, level } = this.state;
+    const { authed, level, userPhoto } = this.state;
 
     return (
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar authed={authed} level={level} />
+            <MyNavbar authed={authed} level={level} userPhoto={userPhoto} />
             <div className="container">
               <Switch>
                 <PrivateRoute path="/home" component={Home} authed={authed} />
+                <PrivateRoute path="/tickets" component={Tickets} authed={authed} />
+                <PrivateRoute path="/kBase" component={KBase} authed={authed} />
                 <PrivateRoute path="/admin" component={Admin} authed={authed} />
                 <PublicRoute path="/auth" component={Auth} authed={authed} />
                 <Redirect from="*" to="/home"/>
