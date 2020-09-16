@@ -38,12 +38,34 @@ class TicketsDash extends React.Component {
     return (
       <div className="TicketsDash">
         <div className="container">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Tickets by Status</h5>
+                  <Chart options={this.state.options} series={this.state.series} type="pie" width={500} height={320} />
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Tickets by Priority</h5>
+                  <Chart options={this.state.options} series={this.state.series} type="pie" width={500} height={320} />
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <Card>
-          <Card.Header>Quote This TicketsDash</Card.Header>
+          <Card.Header>Tickets by All Groups (Departments)</Card.Header>
           <Card.Body>
             <blockquote className="blockquote mb-0">
-              <div>
+              <div className="col-12 offset-3">
               <Chart options={this.state.options} series={this.state.series} type="pie" width={500} height={320} />
               </div>
               <p>
