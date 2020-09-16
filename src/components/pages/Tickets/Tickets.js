@@ -1,7 +1,9 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
-import Card from 'react-bootstrap/Card';
+// import Card from 'react-bootstrap/Card';
 import './Tickets.scss';
+import TicketsDash from '../../shared/TicketsDash';
+import MyTickets from '../../shared/MyTickets';
 
 class Tickets extends React.Component {
   state = {
@@ -28,48 +30,17 @@ class Tickets extends React.Component {
       const { tickeLink } = this.state;
       if (tickeLink === 'link1') {
         return (
-          <Card>
-          <Card.Header>Quote {eventTicketsNav}</Card.Header>
-          <Card.Body>
-            <blockquote className="blockquote mb-0">
-              <p>
-                {' '}
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                erat a ante.{' '}
-              </p>
-              <footer className="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </footer>
-            </blockquote>
-          </Card.Body>
-        </Card>
+          <TicketsDash />
         );
       }
 
       if (tickeLink === 'link2') {
         return (
-          <Card>
-          <Card.Header>Quote link2</Card.Header>
-          <Card.Body>
-            <blockquote className="blockquote mb-0">
-              <p>
-                {' '}
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                erat a ante.{' '}
-              </p>
-              <footer className="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </footer>
-            </blockquote>
-          </Card.Body>
-        </Card>
+          <MyTickets />
         );
       }
 
       return <h2> nothing selected </h2>;
-    };
-    const eventTicketsNav = (e) => {
-      console.warn(e.target.Link);
     };
 
     return (
