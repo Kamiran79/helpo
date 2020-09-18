@@ -6,10 +6,15 @@ import TicketsDash from '../../shared/TicketsDash';
 import MyTickets from '../../shared/MyTickets';
 import MyRealTickets from '../../shared/MyRealTickets';
 
+import authData from '../../../helpers/data/authData';
+import usersData from '../../../helpers/data/usersData';
+
 class Tickets extends React.Component {
   state = {
     dash: 'link-1',
     tickeLink: 'link1',
+    name: '',
+    department: '',
   }
 
   updateTickets = (select) => {
@@ -24,6 +29,15 @@ class Tickets extends React.Component {
 
   componentDidMount() {
     this.setState({ dash: 'link1' });
+    const userObj = authData.getUser();
+    console.warn('getting user info ', userObj.uid);
+    // const uid = authData.getUid;
+    usersData.getUserByUid(userObj.uid)
+      .then((res) => {
+        this.setState({ name: res[0].name, department: res[0].department });
+        console.warn('getting user info ', res[0].department);
+      })
+      .catch((err) => console.warn('get user error ', err));
   }
 
   render() {
@@ -43,7 +57,8 @@ class Tickets extends React.Component {
 
       if (tickeLink === 'link3') {
         return (
-          <MyRealTickets />
+          <MyRealTickets {...this.props}/>
+          // <MyRealTickets name={this.name} department={this.department}/>
         );
       }
 

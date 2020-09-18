@@ -7,6 +7,9 @@ import {
   DropdownToggle,
   Button,
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
+// import usersData from '../../helpers/data/usersData';
+import authData from '../../helpers/data/authData';
 // import './MyRealTickets.scss';
 
 class MyRealTickets extends React.Component {
@@ -22,6 +25,17 @@ class MyRealTickets extends React.Component {
     this.setState({ isOpen: !isOpen });
   };
 
+  newTicketEvent = (e) => {
+    e.preventDefault();
+    // try git info before pass to that page.
+    // this.props.history.push(`/newTicket/${'UID or somthing to pass'}`);
+    // const birbId = 'birb10000';
+    const obj = authData.getUser();
+    this.props.history.push(`/newTicket/${obj.uid}`);
+    // return <Link to='/newTicket'></Link>;
+    // this.props.history.push(`/new/${birbId}`);
+  }
+
   render() {
     // const { isOpen } = this.state;
     return (
@@ -29,7 +43,8 @@ class MyRealTickets extends React.Component {
         <h2>INSIDE MyRealTickets COMPONENT</h2>
         {/* <button className="btn btn-info">I am a button</button> */}
         <ButtonGroup>
-          <Button>New Ticket</Button>
+          <Button onClick={this.newTicketEvent}>New Ticket</Button>
+          <Link className="btn btn-primary" to='/newTicket'>New Ticket</Link>
           <Button>Filter</Button>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret>
