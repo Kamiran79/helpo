@@ -13,6 +13,8 @@ import Home from '../components/pages/Home/Home';
 import MyNavbar from '../components/pages/MyNavbar/MyNavbar';
 import Tickets from '../components/pages/Tickets/Tickets';
 import KBase from '../components/pages/KBase/KBase';
+import NewTicket1 from '../components/pages/NewTicket/NewTicket1';
+import NewTicket from '../components/shared/NewTicket';
 
 import Admin from '../components/pages/Admin/Admin';
 
@@ -56,7 +58,7 @@ class App extends React.Component {
       .then((res) => {
         // console.warn('found what return then after that the board', res[0].uid);
         if (uid === res[0].uid) {
-          // console.warn('found what return then after that the board', res[0]);
+          console.warn('found what return then after that the board', res[0]);
           if (res[0].level === 'user') {
             this.setState({ level: 'user' });
           } else if (res[0].level === 'admin') {
@@ -99,6 +101,8 @@ class App extends React.Component {
                 <PrivateRoute path="/home" component={Home} authed={authed} />
                 <PrivateRoute path="/tickets" component={Tickets} authed={authed} />
                 <PrivateRoute path="/kBase" component={KBase} authed={authed} />
+                <PrivateRoute path="/newTicket/:uid" component={NewTicket} authed={authed} />
+                <PrivateRoute path="/new" component={NewTicket1} authed={authed} />
                 <PrivateRoute path="/admin" component={Admin} authed={authed} />
                 <PublicRoute path="/auth" component={Auth} authed={authed} />
                 <Redirect from="*" to="/home"/>

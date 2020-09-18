@@ -3,24 +3,36 @@
     "uid": "lysPjDu7HyPRBLhOYeZ44Ha0YoU2",
     "name": "Kamiran",
     "level": "user",
+    "title": "Software Engineer",
+    "imgUrl": "",
+    "manager": "TBD",
     "department": "R&D"
   },
   "user2": {
     "uid": "user2",
     "name": "Kmiran Admin",
     "level": "admin",
+    "title": "Software Engineer",
+    "imgUrl": "",
+    "manager": "TBD",    
     "department": "R&D"
   },
   "user3": {
     "uid": "user3",
     "name": "just a user",
     "level": "user",
+    "title": "Software Engineer",
+    "imgUrl": "",
+    "manager": "TBD",    
     "department": "Sales"
   },
   "user4": {
     "uid": "user4",
     "name": "just an admin",
     "level": "admin",
+    "title": "Software Engineer",
+    "imgUrl": "",
+    "manager": "TBD",    
     "department": "IT"
   }
 }
