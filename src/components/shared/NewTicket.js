@@ -37,6 +37,7 @@ class NewTicket extends React.Component {
     details: '',
     status: 'New',
     priority: '',
+    resolution: '',
     dDate: new Date(),
   }
 
@@ -48,6 +49,11 @@ class NewTicket extends React.Component {
   changeToAddressEvent = (e) => {
     e.preventDefault();
     this.setState({ toAddress: e.target.value });
+  };
+
+  changeAssignToEvent = (e) => {
+    e.preventDefault();
+    this.setState({ assignTo: e.target.value });
   };
 
   changeSubjectEvent = (e) => {
@@ -92,13 +98,14 @@ class NewTicket extends React.Component {
       'author',
       'department',
       'category',
-      'toAdress',
+      'toAddress',
       'assignTo',
       'subject',
       'details',
       'status',
       'priority',
       'dDate',
+      'resolution',
     ];
 
     const newTicket = _.pick(this.state, keysIWant);
@@ -107,7 +114,7 @@ class NewTicket extends React.Component {
     ticketsData
       .createTicket(newTicket)
       .then((res) => {
-        this.props.history.push(`/tickets/${res.data.name}`);
+        this.props.history.push(`/tickets/link2/${res.data.name}`);
       })
       .catch((err) => console.error('new tickets broke', err));
   };
@@ -142,8 +149,10 @@ class NewTicket extends React.Component {
       // toAddress,
       forToAddress,
       // assignTo,
+      forAssignTo,
       subject,
       details,
+      // resolution,
       status,
       // priority,
       forPriority,
@@ -220,9 +229,26 @@ class NewTicket extends React.Component {
               onChange={this.changeToAddressEvent}
               className="form-control"
               id="toAddress">
-              <option>Please Select a Category</option>
+              <option>Please Select a Group</option>
               <option value='IT'>IT</option>
               <option value='Developer'>Developer</option>
+              <option value='Others'>Others</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="Assign To">Assign To</label>
+            <select
+              value={forAssignTo}
+              onChange={this.changeAssignToEvent}
+              className="form-control"
+              id="toAddress">
+              <option>Please Select a Options Below:</option>
+              <option value='IT'>IT</option>
+              <option value='Developer'>Developer</option>
+              <option value='Accounting'>Accounting</option>
+              <option value='Engineering'>Engineering</option>
+              <option value='Myself'>MySelf</option>
               <option value='Others'>Others</option>
             </select>
           </div>
@@ -367,4 +393,32 @@ export default NewTicket;
             />
           </div>
 
+*/
+
+/* radio buttons worked with few bugs have to be double click
+
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio1"
+              value="IT"
+              onChange={this.changeAssignToEvent}/>
+            <label className="form-check-label" htmlFor="inlineRadio1">1</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio2"
+              value="MySelf"
+              onChange={this.changeAssignToEvent}/>
+            <label className="form-check-label" htmlFor="inlineRadio2">2</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled />
+            <label className="form-check-label" htmlFor="inlineRadio3">3 (disabled)</label>
+          </div>
 */
