@@ -1,23 +1,67 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 // import { Button, CardTitle, CardText, Row, Col } from 'bootstrap';
 import Chart from 'react-apexcharts';
 
+import ticketsData from '../../helpers/data/ticketsData';
+import authData from '../../helpers/data/authData';
 // import './TicketsDash.scss';
 
 class TicketsDash extends React.Component {
+  static propTypes = {
+    new: PropTypes.number.isRequired,
+  }
+
+  getAllTickets = () => {
+    ticketsData.getTicketsByUid(authData.getUid())
+      .then((backtickets) => {
+        let tickets = [];
+        tickets = backtickets.filter((ticket) => ticket.status === 'Open');
+        const openCount = tickets.length;
+        tickets = backtickets.filter((ticket) => ticket.status === 'New');
+        const newCount = tickets.length;
+        tickets = backtickets.filter((ticket) => ticket.status === 'Resolved');
+        const resolvedCount = tickets.length;
+
+        this.setState({ openCount, newCount, resolvedCount });
+      })
+      .catch((err) => console.error('get tickets broke!!', err));
+  };
+
+  state = {
+    openCount: 0,
+    newCount: 0,
+    resolvedCount: 0,
+  }
+
+  componentDidMount() {
+    this.getAllTickets();
+  }
+
   constructor(props) {
     super(props);
-
+    // const { resolvedCount, openCount, newCount } = this.state;
+    ticketsData.getTicketsByUid(authData.getUid())
+      .then((backtickets) => {
+        let tickets = [];
+        tickets = backtickets.filter((ticket) => ticket.status === 'Open');
+        const openCount = tickets.length;
+        tickets = backtickets.filter((ticket) => ticket.status === 'New');
+        const newCount = tickets.length;
+        tickets = backtickets.filter((ticket) => ticket.status === 'Resolved');
+        const resolvedCount = tickets.length;
+        this.setState({ openCount, newCount, resolvedCount });
+      })
+      .catch((err) => console.error('get tickets broke!!', err));
     this.state = {
-
-      series: [44, 55, 13, 43, 22],
+      series: [this.state.resolvedCount, this.state.openCount, this.props.new, 3, 1],
       options: {
         chart: {
           width: 380,
           type: 'pie',
         },
-        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+        labels: ['New', 'Team B', 'Team C', 'Team D', 'Team E'],
         responsive: [{
           breakpoint: 480,
           options: {
@@ -30,7 +74,6 @@ class TicketsDash extends React.Component {
           },
         }],
       },
-
     };
   }
 

@@ -21,18 +21,21 @@ const getTicketsByUid = (uid) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-const getSingleTicketById = (ticketId) => axios.get(`${baseUrl}/tickets/${ticketId}.json`);
+const getSingleTicketNumberById = (ticketNumberId) => axios.get(`${baseUrl}/ticketNumber/${ticketNumberId}.json`);
+
+const getTicketNumber = () => axios.get(`${baseUrl}/ticketNumber.json`);
 
 const deleteTicket = (ticketId) => axios.delete(`${baseUrl}/tickets/${ticketId}.json`);
 
-const createTicket = (newticket) => axios.post(`${baseUrl}/tickets.json`, newticket);
+const createTicketNumber = (newTicketNumber) => axios.post(`${baseUrl}/ticketNumber.json`, newTicketNumber);
 
-const updateTicket = (ticketId, editedTicket) => axios.put(`${baseUrl}/tickets/${ticketId}.json`, editedTicket);
+const updateTicketNumber = (ticketNumberId, editedTicketNumber) => axios.put(`${baseUrl}/ticketNumber/${ticketNumberId}.json`, editedTicketNumber);
 
 export default {
   getTicketsByUid,
-  getSingleTicketById,
+  getSingleTicketNumberById,
+  getTicketNumber,
   deleteTicket,
-  createTicket,
-  updateTicket,
+  createTicketNumber,
+  updateTicketNumber,
 };
