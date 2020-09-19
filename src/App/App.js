@@ -23,6 +23,7 @@ import authData from '../helpers/data/authData';
 import fbConnection from '../helpers/data/connection';
 
 import './App.scss';
+import SingleTicket from '../components/pages/SingleTicket/SingleTicket';
 
 fbConnection();
 
@@ -99,10 +100,11 @@ class App extends React.Component {
             <div className="container">
               <Switch>
                 <PrivateRoute path="/home" component={Home} authed={authed} />
-                <PrivateRoute path="/tickets" component={Tickets} authed={authed} />
+                <PrivateRoute path="/tickets/" component={Tickets} authed={authed} />
                 <PrivateRoute path="/kBase" component={KBase} authed={authed} />
                 <PrivateRoute path="/newTicket/:uid" component={NewTicket} authed={authed} />
                 <PrivateRoute path="/new" component={NewTicket1} authed={authed} />
+                <PrivateRoute path="/singleTicket/:ticketId" component={SingleTicket} authed={authed} />
                 <PrivateRoute path="/admin" component={Admin} authed={authed} />
                 <PublicRoute path="/auth" component={Auth} authed={authed} />
                 <Redirect from="*" to="/home"/>

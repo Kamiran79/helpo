@@ -13,6 +13,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import authData from '../../helpers/data/authData';
 import ticketsData from '../../helpers/data/ticketsData';
+import ticketNumberData from '../../helpers/data/ticketNumberData';
 // create new state for an empty object for that ticket.
 
 // change event for each field to save the value
@@ -24,14 +25,15 @@ import ticketsData from '../../helpers/data/ticketsData';
 
 class NewTicket extends React.Component {
   state = {
-    ticketNumber: '',
+    ticketNumber: 0,
     cUid: '',
     oDate: new Date(),
-    cDate: new Date(),
+    cDate: '',
+    uDate: new Date(),
     author: '',
     department: '',
     category: '',
-    toAddress: '',
+    // toAddress: '',
     assignTo: '',
     subject: '',
     details: '',
@@ -45,11 +47,12 @@ class NewTicket extends React.Component {
     e.preventDefault();
     this.setState({ category: e.target.value });
   };
-
+  /*
   changeToAddressEvent = (e) => {
     e.preventDefault();
     this.setState({ toAddress: e.target.value });
   };
+  */
 
   changeAssignToEvent = (e) => {
     e.preventDefault();
@@ -86,19 +89,32 @@ class NewTicket extends React.Component {
 
   saveNewTicket = (e) => {
     e.preventDefault();
-    // get birb items off state
-    // create new birb object
+    const ticketNumberUpdate = {
+      ticketNumber: 0,
+    };
+
+    ticketNumberUpdate.ticketNumber = this.state.ticketNumber + 1;
+    console.warn('see the update object tik numb ', ticketNumberUpdate.ticketNumber);
+    ticketNumberData.updateTicketNumber('ticketNumber1', ticketNumberUpdate)
+      .then()
+      .catch((err) => console.error('error to update number ', err));
+    /* ticketNumberData.createTicketNumber(ticketNumber)
+      .then((res) => {
+      })
+      .catch((err) => console.error('new tickets Number broke', err)); */
     // pass that to a data function
+
     // do something on save?
     const keysIWant = [
       'ticketNumber',
       'cUid',
       'oDate',
       'cDate',
+      'uDate',
       'author',
       'department',
       'category',
-      'toAddress',
+      // 'toAddress',
       'assignTo',
       'subject',
       'details',
@@ -114,7 +130,7 @@ class NewTicket extends React.Component {
     ticketsData
       .createTicket(newTicket)
       .then((res) => {
-        this.props.history.push(`/tickets/link2/${res.data.name}`);
+        this.props.history.push(`/singleTicket/${res.data.name}`);
       })
       .catch((err) => console.error('new tickets broke', err));
   };
@@ -122,6 +138,16 @@ class NewTicket extends React.Component {
   componentDidMount() {
     const { uid } = this.props.match.params;
     // const obj = authData.getUser();
+    ticketNumberData.getSingleTicketNumberById('ticketNumber1')
+      .then(({ data }) => {
+        let { ticketNumber } = this.state;
+        ticketNumber = data.ticketNumber;
+        console.warn('data is', data);
+        console.warn('nu is', ticketNumber);
+        this.setState({ ticketNumber });
+      })
+      .catch((err) => console.error(err));
+    // this.setState({ ticketNumber: 0 });
     usersData.getUserByUid(uid)
       .then((res) => {
         console.warn('uid ', uid);
@@ -147,7 +173,7 @@ class NewTicket extends React.Component {
       // category,
       forCategory,
       // toAddress,
-      forToAddress,
+      // forToAddress,
       // assignTo,
       forAssignTo,
       subject,
@@ -163,8 +189,32 @@ class NewTicket extends React.Component {
 
     return (
       <div className="NewTicket col-12">
-        <h2>INSIDE NewTicket COMPONENT</h2>
-        <form className="col-6 offset-3">
+        <h2 className="float-left">New Ticket</h2>
+        <h2 className="float-right">Ticket Details</h2>
+        <br />
+        <hr />
+        <form className="col-8 offset-2">
+          <div class="form-row mt-5">
+            <div class="form-group col-md-6">
+              <label htmlFor="oDate">Open Date: {'  '}</label>
+              <DatePicker
+                class="form-control"
+                selected={oDate}
+                onChange={this.oDateEvent}
+                showTimeSelect
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label htmlFor="cDate">Close Date: {'  '}</label>
+              <DatePicker
+                class="form-control"
+                onChange={this.cDateEvent}
+                showTimeSelect
+                disabled
+              />
+            </div>
+          </div>
+
           <div className="form-group">
             <label htmlFor="author">Created By</label>
             <input
@@ -213,7 +263,8 @@ class NewTicket extends React.Component {
               value={forCategory}
               onChange={this.changeCategoryEvent}
               className="form-control"
-              id="category">
+              id="category"
+              required>
               <option>Please Select a Category</option>
               <option value='Web'>Web</option>
               <option value='Application'>Application</option>
@@ -222,6 +273,7 @@ class NewTicket extends React.Component {
             </select>
           </div>
 
+          {/* Disabled to address same as assign to
           <div className="form-group">
             <label htmlFor="To Address">To Address</label>
             <select
@@ -235,6 +287,7 @@ class NewTicket extends React.Component {
               <option value='Others'>Others</option>
             </select>
           </div>
+          */}
 
           <div className="form-group">
             <label htmlFor="Assign To">Assign To</label>
@@ -262,11 +315,12 @@ class NewTicket extends React.Component {
               placeholder="Enter Subject"
               value={subject}
               onChange={this.changeSubjectEvent}
+              required
             />
           </div>
 
           <div class="form-group">
-            <label for="details">Issue details</label>
+            <label htmlfor="details">Issue details</label>
             <textarea
               class="form-control"
               id="details"
@@ -302,17 +356,6 @@ class NewTicket extends React.Component {
               <option value='Meduim'>Meduim</option>
               <option value='High'>High</option>
             </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="oDate" className="mr-2">
-              oDate:{' '}
-            </label>
-            <DatePicker
-              selected={oDate}
-              onChange={this.oDateEvent}
-              showTimeSelect
-            />
           </div>
 
           <div className="form-group">
@@ -421,4 +464,29 @@ export default NewTicket;
             <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled />
             <label className="form-check-label" htmlFor="inlineRadio3">3 (disabled)</label>
           </div>
+*/
+
+/* was working just want re-arrange them
+
+            <div className="form-group col-md-3">
+              <label htmlFor="oDate" className="">
+                Open Date:{' '}
+              </label>
+              <DatePicker
+                selected={oDate}
+                onChange={this.oDateEvent}
+                showTimeSelect
+              />
+            </div>
+            <div className="form-group col-md-3">
+              <label htmlFor="cDate" className="">
+                Close Date:{' '}
+              </label>
+              <DatePicker
+                selected={cDate}
+                onChange={this.cDateEvent}
+                showTimeSelect
+              />
+            </div>
+
 */

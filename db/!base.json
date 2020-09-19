@@ -5,5 +5,6 @@
   "ticketFollow": "somethingGoHere",
   "kbHub": "somethingGoHere",
   "kbContent": "somethingGoHere",
-  "department": "monkeyLog"
+  "department": "monkeyLog",
+  "ticketNumber": "monkeyLog"
 }

@@ -3,11 +3,13 @@ import Nav from 'react-bootstrap/Nav';
 // import Card from 'react-bootstrap/Card';
 import './Tickets.scss';
 import TicketsDash from '../../shared/TicketsDash';
-import MyTickets from '../../shared/MyTickets';
+import AssignedTickets from '../../shared/AssignedTickets';
 import MyRealTickets from '../../shared/MyRealTickets';
 
 import authData from '../../../helpers/data/authData';
 import usersData from '../../../helpers/data/usersData';
+// import ticketsData from '../../../helpers/data/ticketsData';
+import ticketsData from '../../../helpers/data/ticketsData';
 
 class Tickets extends React.Component {
   state = {
@@ -15,6 +17,10 @@ class Tickets extends React.Component {
     tickeLink: 'link1',
     name: '',
     department: '',
+    tickets: [],
+    openCount: 0,
+    newCount: 0,
+    resolvedCount: 0,
   }
 
   updateTickets = (select) => {
@@ -28,7 +34,25 @@ class Tickets extends React.Component {
   };
 
   componentDidMount() {
-    this.setState({ dash: 'link1' });
+    this.setState({ dash: 'link1', tickets: [] });
+    ticketsData.getTicketsByUid(authData.getUid())
+      .then((backtickets) => {
+        let tickets1 = [];
+        tickets1 = backtickets.filter((ticket) => ticket.status === 'Open');
+        const openCount = tickets1.length;
+        tickets1 = backtickets.filter((ticket) => ticket.status === 'New');
+        const newCount = tickets1.length;
+        tickets1 = backtickets.filter((ticket) => ticket.status === 'Resolved');
+        const resolvedCount = tickets1.length;
+        const { tickets } = backtickets;
+        this.setState({
+          openCount,
+          newCount,
+          resolvedCount,
+          tickets,
+        });
+      })
+      .catch((err) => console.error('get tickets broke!!', err));
     const userObj = authData.getUser();
     console.warn('getting user info ', userObj.uid);
     // const uid = authData.getUid;
@@ -44,14 +68,22 @@ class Tickets extends React.Component {
     const buildTicket = () => {
       const { tickeLink } = this.state;
       if (tickeLink === 'link1') {
+        /* ticketsData.getTicketsByUid(authData.getUid())
+          .then((tickets) => {
+            console.warn('this return to pas prop ', tickets);
+            this.setState({ tickets });
+            // const ticketDash = res.map((ticket) => <TicketsDash key={ticket.id} birb={ticket}/>);
+          })
+          .catch((err) => console.error(err)); */
         return (
-          <TicketsDash />
+          <TicketsDash new={this.state.newCount} tickets={this.state.tickets}/>
+          // ticketDash;
         );
       }
 
       if (tickeLink === 'link2') {
         return (
-          <MyTickets />
+          <AssignedTickets new={this.state.newCount} tickets={this.state.tickets}/>
         );
       }
 
@@ -75,10 +107,10 @@ class Tickets extends React.Component {
             <Nav.Link href="/link1" id="link1" onClick={this.eventClick}>Dashboard</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-3" id="link3" onClick={this.eventClick}>My Real Tickets</Nav.Link>
+            <Nav.Link eventKey="link-3" id="link3" onClick={this.eventClick}>My Requests</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-2" id="link2" onClick={this.eventClick}>My Tickets</Nav.Link>
+            <Nav.Link eventKey="link-2" id="link2" onClick={this.eventClick}>Assigned Tickets</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="link-4">Group Tickets</Nav.Link>
