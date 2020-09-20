@@ -59,7 +59,7 @@ class App extends React.Component {
       .then((res) => {
         // console.warn('found what return then after that the board', res[0].uid);
         if (uid === res[0].uid) {
-          console.warn('found what return then after that the board', res[0]);
+          // console.warn('found what return then after that the board', res[0]);
           if (res[0].level === 'user') {
             this.setState({ level: 'user' });
           } else if (res[0].level === 'admin') {

@@ -14,7 +14,7 @@ import ticketsData from '../../../helpers/data/ticketsData';
 class Tickets extends React.Component {
   state = {
     dash: 'link-1',
-    tickeLink: 'link1',
+    tickeLink: 'link3',
     name: '',
     department: '',
     tickets: [],
@@ -54,12 +54,12 @@ class Tickets extends React.Component {
       })
       .catch((err) => console.error('get tickets broke!!', err));
     const userObj = authData.getUser();
-    console.warn('getting user info ', userObj.uid);
+    // console.warn('getting user info ', userObj.uid);
     // const uid = authData.getUid;
     usersData.getUserByUid(userObj.uid)
       .then((res) => {
         this.setState({ name: res[0].name, department: res[0].department });
-        console.warn('getting user info ', res[0].department);
+        // console.warn('getting user info ', res[0].department);
       })
       .catch((err) => console.warn('get user error ', err));
   }
@@ -76,7 +76,12 @@ class Tickets extends React.Component {
           })
           .catch((err) => console.error(err)); */
         return (
-          <TicketsDash new={this.state.newCount} tickets={this.state.tickets}/>
+          <TicketsDash
+            new={this.state.newCount}
+            open={this.state.openCount}
+            resolved={this.state.resolvedCount}
+            tickets={this.state.tickets}
+          />
           // ticketDash;
         );
       }
@@ -99,7 +104,7 @@ class Tickets extends React.Component {
 
     return (
       <div className="Tickets">
-        <Nav justify variant="tabs" defaultActiveKey="/link1">
+        <Nav justify variant="tabs" defaultActiveKey="/link3">
           <Nav.Item>
             <Nav.Link disabled></Nav.Link>
           </Nav.Item>
