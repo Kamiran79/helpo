@@ -1,6 +1,7 @@
 import React from 'react';
 // import './NewTicket.scss';
-
+import firebase from 'firebase/app';
+import 'firebase/storage';
 // I may need install underscore
 // import _ from 'underscore';
 // new install datePicker from react-datepicker
@@ -14,6 +15,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import authData from '../../helpers/data/authData';
 import ticketsData from '../../helpers/data/ticketsData';
 import ticketNumberData from '../../helpers/data/ticketNumberData';
+// import ticketsFollowData from '../../helpers/data/ticketsFollowData';
+// import ticketsImgData from '../../helpers/data/ticketsImgData';
 // create new state for an empty object for that ticket.
 
 // change event for each field to save the value
@@ -24,6 +27,8 @@ import ticketNumberData from '../../helpers/data/ticketNumberData';
 // need to get the user id, then save that on database firebase
 
 class NewTicket extends React.Component {
+  allInput = { imgUrl1: '' };
+
   state = {
     ticketNumber: 0,
     cUid: '',
@@ -41,6 +46,10 @@ class NewTicket extends React.Component {
     priority: '',
     resolution: '',
     dDate: new Date(),
+    // imgUrl: '',
+    // isImg: false,
+    imageAsFile: '',
+    imageAsUrl: '',
   }
 
   changeCategoryEvent = (e) => {
@@ -87,12 +96,96 @@ class NewTicket extends React.Component {
     this.setState({ department: e.target.value });
   };
 
+  myImges = '';
+
+  setImge = (imgUrl) => {
+    const img = imgUrl;
+    console.warn(img);
+    this.allInput.imgUrl1 = img;
+    // this.setState({ imgUrl });
+    return img;
+  };
+
   saveNewTicket = (e) => {
     e.preventDefault();
+    // const imgUrl, isImg } = this.state;
+    // let isImg = false;
+    const storageRef = firebase.storage().ref(`ticketsImg/${this.state.imageAsFile}`);
+    storageRef.getDownloadURL().then((url) => {
+      console.warn('this is the url for the image ', url);
+      // let imgUrl = '';
+      // let isImg = false;
+      const keysIWant = [
+        'ticketNumber',
+        'cUid',
+        'oDate',
+        'cDate',
+        'uDate',
+        'author',
+        'department',
+        'category',
+        // 'toAddress',
+        'assignTo',
+        'subject',
+        'details',
+        'status',
+        'priority',
+        'dDate',
+        'resolution',
+      ];
+      const newTicket = _.pick(this.state, keysIWant);
+      newTicket.uid = authData.getUid();
+      newTicket.isClose = false;
+      if (url !== '') {
+        // this.setImge(url);
+        // this.myImges = url;
+        newTicket.imgUrl = url;
+        newTicket.isImg = true;
+        ticketsData.createTicket(newTicket)
+          .then((res) => {
+            this.props.history.push(`/singleTicket/${res.data.name}`);
+          })
+          .catch((err) => console.error('new tickets broke', err));
+        // isImg = true;
+        // this.state.imageAsUrl((prevObject) => ({ ...prevObject, imgUrl: url }));
+        // this.allInput.imgUrl = url;
+        // imgUrl = url;
+        // this.setState({ imgUrl: url });
+        // this.setState({ isImg: true });
+        // console.warn('access to add object and url is ', this.state.imageAsUrl);
+        /*
+        const follow = 1;
+        const newTicketFollow = {
+          ticketId: '',
+          ticketNumber: this.state.ticketNumber,
+          uid: this.state.cUid,
+          followNumber: follow,
+          uDate: this.state.oDate,
+          responseName: this.state.author,
+          imgUrl: url,
+          isImg: true,
+          description: 'first attached file for the issue',
+          linkRef: 'this.state.imageAsUrl',
+        };
+        ticketsFollowData.createTicketFollow(newTicketFollow)
+          .then()
+          .catch((err) => console.error(err));
+        */
+      } else {
+        newTicket.imgUrl = '';
+        newTicket.isImg = false;
+        ticketsData.createTicket(newTicket)
+          .then((res) => {
+            this.props.history.push(`/singleTicket/${res.data.name}`);
+          })
+          .catch((err) => console.error('new tickets broke', err));
+        console.warn('failure to upload ?? url is ', this.state.imageAsUrl);
+      }
+      // this.setState({ imageAsUrl: url });
+    });
     const ticketNumberUpdate = {
       ticketNumber: 0,
     };
-
     ticketNumberUpdate.ticketNumber = this.state.ticketNumber + 1;
     console.warn('see the update object tik numb ', ticketNumberUpdate.ticketNumber);
     ticketNumberData.updateTicketNumber('ticketNumber1', ticketNumberUpdate)
@@ -105,6 +198,18 @@ class NewTicket extends React.Component {
     // pass that to a data function
 
     // do something on save?
+    // console.warn('what is in myImages have: ', this.myImges);
+    // console.warn('access to add object and url is ', this.allInput);
+    // const { imgUrl } = this.state;
+    // if (imgUrl !== '') {
+    // const imgUrl = this.allInput.imgUrl1;
+    // this.setState({ imgUrl });
+    // const isImg = true;
+    // this.setState({ isImg });
+    //  console.warn('image updated', imgUrl);
+    // }
+    // console.warn('image updated', imgUrl);
+    /*
     const keysIWant = [
       'ticketNumber',
       'cUid',
@@ -127,31 +232,34 @@ class NewTicket extends React.Component {
     const newTicket = _.pick(this.state, keysIWant);
     newTicket.uid = authData.getUid();
 
-    ticketsData
-      .createTicket(newTicket)
+    ticketsData.createTicket(newTicket)
       .then((res) => {
         this.props.history.push(`/singleTicket/${res.data.name}`);
       })
       .catch((err) => console.error('new tickets broke', err));
+    */
   };
 
   componentDidMount() {
     const { uid } = this.props.match.params;
     // const obj = authData.getUser();
+    // this.setImge();
+    const imgUrl = '';
+    this.setState({ imgUrl });
     ticketNumberData.getSingleTicketNumberById('ticketNumber1')
       .then(({ data }) => {
         let { ticketNumber } = this.state;
         ticketNumber = data.ticketNumber;
-        console.warn('data is', data);
-        console.warn('nu is', ticketNumber);
+        // console.warn('data is', data);
+        // console.warn('nu is', ticketNumber);
         this.setState({ ticketNumber });
       })
       .catch((err) => console.error(err));
     // this.setState({ ticketNumber: 0 });
     usersData.getUserByUid(uid)
       .then((res) => {
-        console.warn('uid ', uid);
-        console.warn('user name ', res[0].name);
+        // console.warn('uid ', uid);
+        // console.warn('user name ', res[0].name);
         this.setState({
           cUid: res[0].uid,
           author: res[0].name,
@@ -160,6 +268,19 @@ class NewTicket extends React.Component {
       })
       .catch((err) => console.error('read user error ', err));
   }
+
+  uploadImage = () => {
+    const file = document.getElementById('ticket-image').files[0];
+    const image = file.name;
+    // const { imageAsFile } = this.state;
+    this.setState({ imageAsFile: image });
+    console.warn('image file name ', image);
+    firebase.storage().ref(`ticketsImg/${image}`).put(file).then(() => {});
+    // const storageRef = firebase.storage().ref(`ticketsImg/${image}`);
+    // storageRef.getDownloadURL().then((url) => {
+    //   console.warn('this is the url for the image ', url);
+    // });
+  };
 
   render() {
     const {
@@ -183,9 +304,11 @@ class NewTicket extends React.Component {
       // priority,
       forPriority,
       dDate,
+      // imageAsFile,
     } = this.state;
 
     // const cat = '';
+    // const storage = firebase.storage();
 
     return (
       <div className="NewTicket col-12">
@@ -368,7 +491,13 @@ class NewTicket extends React.Component {
               showTimeSelect
             />
           </div>
-          <button className="btn btn-warning" onClick={this.saveNewTicket}>
+          <input
+            className="btn btn-warning float-left"
+            type="file"
+            id="ticket-image"
+            onChange={this.uploadImage}
+          />
+          <button className="btn btn-warning float-right" onClick={this.saveNewTicket}>
             Save
           </button>
         </form>
@@ -489,4 +618,38 @@ export default NewTicket;
               />
             </div>
 
+*/
+
+/*
+
+  handleFireBaseUpload = (e) => {
+    e.preventDefault();
+    const image = e.target.files[0];
+    this.setState({ image });
+    console.warn('start of upload');
+    // async magic goes here...
+    const storage = firebase.storage();
+    const { imageAsFile } = this.state;
+    if (imageAsFile === '') {
+      console.error(`not an image, the image file is a ${typeof (imageAsFile)}`);
+    }
+    const uploadTask = storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
+    // initiates the firebase side uploading
+    uploadTask.on('state_changed',
+      (snapShot) => {
+        // takes a snap shot of the process as it is happening
+        console.warn(snapShot);
+      }, (err) => {
+      // catches the errors
+        console.warn(err);
+      }, () => {
+        // gets the functions from storage refences the image storage in firebase by the children
+        // gets the download url then sets the image from firebase as the value for the imgUrl key:
+        storage.ref('images').child(imageAsFile.name).getDownloadURL()
+          .then((fireBaseUrl) => {
+            this.setState((prevObject) => ({ ...prevObject, imgUrl: fireBaseUrl }));
+          })
+          .catch((err) => console.error(err));
+      });
+  };
 */

@@ -79,7 +79,7 @@ class Ticket extends React.Component {
 
           </div>
           <div className="card-footer text-muted">
-            Last Update: {moment(ticket.cDate).fromNow()}
+            Last Update: {moment(ticket.uDate).fromNow()}
             <Link to={editLink} className="btn btn-success mr-1 float-left"><i className="fas fa-pencil-alt"></i></Link>
             <button className="btn btn-danger float-right" onClick={this.deleteTicketEvent}><i className="fas fa-trash-alt "></i></button>
           </div>

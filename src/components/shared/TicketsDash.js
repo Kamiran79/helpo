@@ -11,6 +11,8 @@ import authData from '../../helpers/data/authData';
 class TicketsDash extends React.Component {
   static propTypes = {
     new: PropTypes.number.isRequired,
+    open: PropTypes.number.isRequired,
+    resolved: PropTypes.number.isRequired,
   }
 
   getAllTickets = () => {
@@ -55,13 +57,13 @@ class TicketsDash extends React.Component {
       })
       .catch((err) => console.error('get tickets broke!!', err));
     this.state = {
-      series: [this.state.resolvedCount, this.state.openCount, this.props.new, 3, 1],
+      series: [this.props.resolved, this.props.open, this.props.new],
       options: {
         chart: {
           width: 380,
           type: 'pie',
         },
-        labels: ['New', 'Team B', 'Team C', 'Team D', 'Team E'],
+        labels: ['Resolved', 'Open', 'New'],
         responsive: [{
           breakpoint: 480,
           options: {
