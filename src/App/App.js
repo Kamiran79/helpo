@@ -24,6 +24,7 @@ import fbConnection from '../helpers/data/connection';
 
 import './App.scss';
 import SingleTicket from '../components/pages/SingleTicket/SingleTicket';
+import ResponseTickets from '../components/pages/ResponseTickets/ResponseTickets';
 
 fbConnection();
 
@@ -103,6 +104,7 @@ class App extends React.Component {
                 <PrivateRoute path="/tickets/" component={Tickets} authed={authed} />
                 <PrivateRoute path="/kBase" component={KBase} authed={authed} />
                 <PrivateRoute path="/newTicket/:uid" component={NewTicket} authed={authed} />
+                <PrivateRoute path="/responseTicket/:ticketId" component={ResponseTickets} authed={authed} />
                 <PrivateRoute path="/new" component={NewTicket1} authed={authed} />
                 <PrivateRoute path="/singleTicket/:ticketId" component={SingleTicket} authed={authed} />
                 <PrivateRoute path="/admin" component={Admin} authed={authed} />

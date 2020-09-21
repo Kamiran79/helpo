@@ -55,11 +55,11 @@ class Ticket extends React.Component {
           </div>
           <div className="card-body">
             <div className="row">
-              <div className="col-2 my_col">
+              <div className="col-md-2 my_col">
                 <p className="card-text my_header">raised by</p>
                 <p className="card-text">{ticket.author}</p>
               </div>
-              <div className="col-2 my_col">
+              <div className="col-md-2 my_col">
                 <p className="card-text my_header">assigned to</p>
                 <p className="card-text">{ticket.assignTo}</p>
               </div>

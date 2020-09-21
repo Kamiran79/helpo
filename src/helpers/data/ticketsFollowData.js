@@ -4,17 +4,17 @@ import apiKeys from '../apiKeys.json';
 
 const baseUrl = apiKeys.firebaseConfig.databaseURL;
 
-const getTicketsFollowByTickNumber = (ticketNumber) => new Promise((resolve, reject) => {
-  axios.get(`${baseUrl}/ticketsFollow.json?orderBy="ticketNumber"&equalTo="${ticketNumber}"`)
+const getTicketsFollowByTicketId = (ticketId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/ticketsFollow.json?orderBy="ticketId"&equalTo="${ticketId}"`)
     .then((response) => {
       const alltickets = response.data;
-      console.warn('ticketnumber passed ', ticketNumber);
+      console.warn('ticketId passed ', ticketId);
       console.warn('access to get follow ', response.data);
       const mytickets = [];
       if (alltickets) {
-        Object.keys(alltickets).forEach((ticketId) => {
-          const ticket = alltickets[ticketId];
-          ticket.id = ticketId;
+        Object.keys(alltickets).forEach((ticketFollowId) => {
+          const ticket = alltickets[ticketFollowId];
+          ticket.id = ticketFollowId;
           mytickets.push(ticket);
         });
       }
@@ -32,7 +32,7 @@ const createTicketFollow = (newTicketFollow) => axios.post(`${baseUrl}/ticketsFo
 const updateTicket = (ticketId, editedTicket) => axios.put(`${baseUrl}/tickets/${ticketId}.json`, editedTicket);
 
 export default {
-  getTicketsFollowByTickNumber,
+  getTicketsFollowByTicketId,
   getSingleTicketFollowById,
   deleteTicket,
   createTicketFollow,

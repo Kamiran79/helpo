@@ -421,6 +421,9 @@ class NewTicket extends React.Component {
               id="toAddress">
               <option>Please Select a Options Below:</option>
               <option value='IT'>IT</option>
+              <option value='E11'>E11</option>
+              <option value='E12'>E12</option>
+              <option value='E13'>E13</option>
               <option value='Developer'>Developer</option>
               <option value='Accounting'>Accounting</option>
               <option value='Engineering'>Engineering</option>

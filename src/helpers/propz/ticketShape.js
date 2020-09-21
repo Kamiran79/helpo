@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const ticketShape = PropTypes.shape({
-  ticketNumber: PropTypes.string.isRequired,
+  ticketNumber: PropTypes.number.isRequired,
   cUid: PropTypes.string.isRequired,
   oDate: PropTypes.string.isRequired,
   cDate: PropTypes.string.isRequired,
