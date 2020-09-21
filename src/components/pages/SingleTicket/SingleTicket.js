@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import {
   UncontrolledCollapse,
@@ -10,7 +11,8 @@ import {
 import ticketsData from '../../../helpers/data/ticketsData';
 
 import './SingleTicket.scss';
-// import ticketsFollowData from '../../../helpers/data/ticketsFollowData';
+import ticketsFollowData from '../../../helpers/data/ticketsFollowData';
+import FollowTickets from '../../shared/FollowTickets/FollowTickets';
 
 /*
 class SingleTicket extends React.Component {
@@ -39,9 +41,23 @@ class SingleTicket extends React.Component {
 */
 const SingleTicket = (props) => {
   const [ticket, setTicket] = useState({});
+  const [responseTicket, setResponseTicket] = useState('');
+  const [ticketsFollow, setTicketsFollow] = useState([]);
+  // const [ticketsFollowCard, setTicketsFollowCard] = useState({});
 
   useEffect(() => {
     const { ticketId } = props.match.params;
+
+    const passId = ticketId;
+    // const responseToTicket = `responseTicket/${passId}`;
+    setResponseTicket(`/responseTicket/${passId}`);
+
+    ticketsFollowData.getTicketsFollowByTicketId(ticketId)
+      .then((res) => {
+        console.warn('this follow: ', res);
+        setTicketsFollow(res);
+      })
+      .catch((err) => console.error(err));
 
     ticketsData.getSingleTicketById(ticketId)
       .then((res) => setTicket(res.data))
@@ -67,10 +83,26 @@ const SingleTicket = (props) => {
     );
   };
 
+  // const responseToTicket = 'responseTicket';
+  const ticketsFollowCard = ticketsFollow.map((ticketFollow) => <FollowTickets key={ticketFollow.id} ticket={ticketFollow}/>);
   const getFollowTickets = () => {
     console.warn(ticket.author);
+    console.warn(ticketsFollow);
+    // const { ticketId } = props.match.params;
     /*
-    ticketsFollowData.getTicketsFollowByTickNumber(Number(ticket.ticketNumber))
+    console.warn('this is the ticket follow ', ticketsFollow);
+    ticketsFollowData.getTicketsFollowByTicketId(ticketId)
+      .then((res) => {
+        console.warn('this follow: ', res);
+        setTicketsFollow(res);
+      })
+      .catch((err) => console.error(err));
+    // to go get follow ticket and build that
+    // setTicketsFollowCard(ticketsFollow.map((ticketFollow) => <FollowTickets key={ticketFollow.id} ticketFollow={ticketFollow} deleteTicketFollow={this.deleteTicketFollow}/>));
+    // const ticketsFollowCard = ticketsFollow.map((ticketFollow) => <FollowTickets key={ticket.id} ticket={ticket} deleteTicket={this.deleteTicket}/>);
+
+    /*
+    ticketsFollowData.getTicketsFollowByTicketId(ticketId)
       .then((res) => {
         console.warn('this follow: ', res);
       })
@@ -90,45 +122,96 @@ const SingleTicket = (props) => {
       </Button>
       {buildFollow}
       <UncontrolledCollapse toggler="#toggler1">
-      <Card className="shadow p-3 mb-3 bg-white rounded">
-        <CardBody >
-          <div className="row">
-            <h5 className="col-10 createdOn_singleTicket">Created on: {moment(ticket.oDate).format('MMM Do YYYY, h:mma')}</h5>
-          </div>
+        <Card className="shadow p-3 mb-3 bg-light rounded popForm_singleTicket">
+          <CardBody >
+            <div className="row">
+            <span className="fieldName_singleTicket bg-dark">Created on:</span><h5 className="createdOn_singleTicket infoField_singleTicket">{moment(ticket.oDate).format('MMM Do YYYY, h:mma')}</h5>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-6">
+                <div className="row">
+                  <span className="fieldName_singleTicket bg-dark">Last Update: </span>
+                  <h5 className="infoField_singleTicket">{moment(ticket.uDate).fromNow()}</h5>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="row">
+                  <span className="fieldName_singleTicket bg-dark">Close Date:</span>
+                  <h5 className="infoField_singleTicket">{ticket.cDate ? moment(ticket.cDate).format('MM-DD-YYYY') : '_'}</h5>
+                </div>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </UncontrolledCollapse>
+      <br />
+      <br />
+      <h2 className="mt-3 details_singleTicket">Details:</h2>
+      <hr />
+      <div className="card shadow p-3 mb-3 bg-light rounded">
+        <div className="card-body">
+          <h5 className="card-title mb-1"><span className="fieldName_singleTicket bg-dark">Created By:</span> {ticket.author}</h5>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item"><span className="font-weight-bold">From Department:</span> {ticket.department}</li>
+            <li className="list-group-item"><span className="font-weight-bold">Category:</span> {ticket.category}</li>
+            <li className="list-group-item"><span className="font-weight-bold">Ticket Assigned to:</span> {ticket.assignTo}</li>
+          </ul>
           <hr />
-          <div className="row">
-            <div className="col-6">
-              <h5>Last Update: {moment(ticket.uDate).fromNow()}</h5>
-            </div>
-            <div className="col-6">
-              <h5>Close Date: {ticket.cDate ? moment(ticket.cDate).format('MM-DD-YYYY') : '_'}</h5>
-            </div>
-          </div>
-        </CardBody>
-      </Card>
-    </UncontrolledCollapse>
-    <br />
-    <br />
-    <h2 className="mt-3 details_singleTicket">Details:</h2>
-    <hr />
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Created By: {ticket.author}</h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">From Department: {ticket.department}</li>
-          <li class="list-group-item">Category: {ticket.category}</li>
-          <li class="list-group-item">Ticket Assigned to: {ticket.assignTo}</li>
-        </ul>
-        <hr />
-        <h6>Request Details:</h6>
-        <p class="card-text pl-2">{ticket.details}</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          <h6 >Request Details:</h6>
+          <p className="card-text pl-2 issueDetails_SingleTicket">{ticket.details}</p>
+          {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
+          {ticket.isImg ? (<img src={ticket.imgUrl} className="card-img-top" alt="" />) : ''}
+        </div>
       </div>
-      <div>
-        <img src="" alt="" />
+      <Button className="float-left" color="light" id="toggler2" style={{ marginBottom: '1rem' }}>
+        <i className="fas fa-caret-down"></i> Status & Schedule
+      </Button>
+      {buildFollow}
+      <UncontrolledCollapse toggler="#toggler2">
+        <Card className="shadow p-3 bg-light rounded">
+          <CardBody >
+            <div className="row">
+              <p className="col-10 createdOn_singleTicket"><span className="fieldName_singleTicket bg-dark">Status:</span> {ticket.status}</p>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-6">
+                <p><span className="fieldName_singleTicket bg-dark">Due Date:</span> {moment(ticket.dDate).format('MMM Do YYYY, h:mma')}</p>
+              </div>
+              <div className="col-6">
+                <p><span className="fieldName_singleTicket bg-dark">priority:</span> {ticket.priority}</p>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </UncontrolledCollapse>
+      <br />
+      <br />
+      <br />
+      <div className="card">
+        <div className="card-header font-weight-bold">
+          Resolution:
+        </div>
+        <div className="card-body">
+          <blockquote className="blockquote mb-0">
+            <p>{ticket.resolution}</p>
+            <footer className="blockquote-footer"><cite title="Source Title"></cite></footer>
+          </blockquote>
+        </div>
       </div>
-    </div>
+      <div className="card">
+        <h5 className="card-header">History:</h5>
+        <div className="card-body">
+          <h5 className="card-title">Special title treatment</h5>
+          <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        </div>
+      </div>
       <h2>Subject {getFollowTickets()}</h2>
+      <div>
+        {ticketsFollowCard}
+      </div>
+      {/*
       <p>Category: {ticket.category}</p>
       <p>Ticket Assigned to: {ticket.assignTo}</p>
       <p>Request Details: {ticket.details}</p>
@@ -137,6 +220,31 @@ const SingleTicket = (props) => {
       <p>priority: {ticket.priority}</p>
       <p>resolution: {ticket.resolution}</p>
       <p>Due Date: {moment(ticket.dDate).format('MMMY Do YYYY, h:mma')}</p>
+      */}
+      <Button className="float-left" color="light" id="toggler3" style={{ marginBottom: '1rem' }}>
+        <i className="fas fa-caret-down"></i> Response <i class="fas fa-reply"></i> Replay
+      </Button>
+      {/* {ticketsFollow} */}
+      <UncontrolledCollapse toggler="#toggler3">
+        <Card className="shadow p-3 bg-light rounded">
+          <CardBody >
+            <div className="row">
+              <p className="col-10 createdOn_singleTicket"><span className="fieldName_singleTicket bg-dark">Response Details:</span> {ticket.status}</p>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-6">
+                <p><span className="fieldName_singleTicket bg-dark">Due Date:</span> {moment(ticket.dDate).format('MMM Do YYYY, h:mma')}</p>
+              </div>
+              <div className="col-6">
+                <p><span className="fieldName_singleTicket bg-dark">priority:</span> {ticket.priority}</p>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </UncontrolledCollapse>
+
+      <Link to={responseTicket}>Response <i class="fas fa-reply"></i> Replay </Link>
       <button className="btn btn-danger col-12" onClick={deleteSingleTicket}><i className="fas fa-trash-alt "></i></button>
     </div>
   );

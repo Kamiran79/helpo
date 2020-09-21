@@ -14,3 +14,32 @@
 .details_singleTicket {
   text-align: center;
 }
+/*
+.popForm_singleTicket {
+   display: table; 
+}
+/*
+.status_singleTick {
+  flex: 1;
+}
+*/
+.issueDetails_SingleTicket {
+  border: 1px solid #cfcfcf;
+}
+
+.fieldName_singleTicket {
+  /* display: table-cell; */
+  width: 10rem;
+  color: #F2F2F2;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 20px;
+  /* display: flex; */
+}
+
+.infoField_singleTicket {
+  padding-top: 14px;
+  font-size: 18px;
+}
