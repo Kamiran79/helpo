@@ -128,7 +128,7 @@ class MyRealTickets extends React.Component {
           {/* <Button>Filter</Button> */}
           <ButtonDropdown isOpen={this.state.dropdownOpen1} toggle={this.toggle1}>
             <DropdownToggle caret>
-              Filter
+            <i class="fas fa-filter"></i> Filter
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem onClick={this.getAllTickets}>All</DropdownItem>
@@ -138,7 +138,7 @@ class MyRealTickets extends React.Component {
           </ButtonDropdown>
           <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret>
-              Sort By
+            <i class="fas fa-sort-amount-down"></i> Sort By
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem onClick={this.sortByNewA}>Sort By New <i class="fas fa-sort-amount-down-alt"></i></DropdownItem>
