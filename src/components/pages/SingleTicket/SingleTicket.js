@@ -87,7 +87,7 @@ const SingleTicket = (props) => {
   const ticketsFollowCard = ticketsFollow.map((ticketFollow) => <FollowTickets key={ticketFollow.id} ticket={ticketFollow}/>);
   const getFollowTickets = () => {
     console.warn(ticket.author);
-    console.warn(ticketsFollow);
+    console.warn('this ticket follow ', ticketsFollow);
     // const { ticketId } = props.match.params;
     /*
     console.warn('this is the ticket follow ', ticketsFollow);
@@ -153,7 +153,7 @@ const SingleTicket = (props) => {
         <div className="card-body">
           <h5 className="card-title mb-1"><span className="fieldName_singleTicket bg-dark">Created By:</span> {ticket.author}</h5>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item"><span className="font-weight-bold">From Department:</span> {ticket.department}</li>
+            <li className="list-group-item"><span className="font-weight-bold">Department:</span> {ticket.department}</li>
             <li className="list-group-item"><span className="font-weight-bold">Category:</span> {ticket.category}</li>
             <li className="list-group-item"><span className="font-weight-bold">Ticket Assigned to:</span> {ticket.assignTo}</li>
           </ul>
@@ -189,7 +189,7 @@ const SingleTicket = (props) => {
       <br />
       <br />
       <br />
-      <div className="card">
+      <div className="card shadow p-3 mb-3 bg-light rounded">
         <div className="card-header font-weight-bold">
           Resolution:
         </div>
@@ -200,12 +200,12 @@ const SingleTicket = (props) => {
           </blockquote>
         </div>
       </div>
-      <div className="card">
-        <h5 className="card-header">History:</h5>
-        <div className="card-body">
-          <h5 className="card-title">Special title treatment</h5>
-          <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        </div>
+      <div className="card shadow p-3 mb-3 bg-light rounded">
+        <h5 className="card-header">History - Response - Replay :</h5>
+        {/* <div className="card-body">
+           <h5 className="card-title"></h5>
+          <p className="card-text"></p>
+        </div>  */}
       </div>
       <h2>Subject {getFollowTickets()}</h2>
       <div>
@@ -221,10 +221,32 @@ const SingleTicket = (props) => {
       <p>resolution: {ticket.resolution}</p>
       <p>Due Date: {moment(ticket.dDate).format('MMMY Do YYYY, h:mma')}</p>
       */}
+
+      <Link className="btn btn-primary shadow p-2 mb-3 rounded" to={responseTicket}>Response <i className="fas fa-reply"></i> Replay </Link>
+      <button className="btn btn-danger col-12" onClick={deleteSingleTicket}><i className="fas fa-trash-alt "></i></button>
+    </div>
+  );
+};
+
+export default SingleTicket;
+
+/*
+          <div class="card border-success mb-3">
+              <div class="card-header bg-transparent border-success"></div>
+              <div class="card-body text-success">
+                <h5 class="card-title">Created on: {moment(ticket.oDate).format('MMM Do YYYY, h:mma')}</h5>
+                <p class="card-text">
+                  Close Date: {ticket.cDate ? moment(ticket.cDate).format('MM-DD-YYYY') : '_'}</p>
+              </div>
+              <div class="card-footer bg-transparent border-success">Last Update: {moment(ticket.uDate).fromNow()}</div>
+            </div>
+*/
+
+/*
       <Button className="float-left" color="light" id="toggler3" style={{ marginBottom: '1rem' }}>
         <i className="fas fa-caret-down"></i> Response <i class="fas fa-reply"></i> Replay
       </Button>
-      {/* {ticketsFollow} */}
+      {/* {ticketsFollow}
       <UncontrolledCollapse toggler="#toggler3">
         <Card className="shadow p-3 bg-light rounded">
           <CardBody >
@@ -243,23 +265,4 @@ const SingleTicket = (props) => {
           </CardBody>
         </Card>
       </UncontrolledCollapse>
-
-      <Link to={responseTicket}>Response <i class="fas fa-reply"></i> Replay </Link>
-      <button className="btn btn-danger col-12" onClick={deleteSingleTicket}><i className="fas fa-trash-alt "></i></button>
-    </div>
-  );
-};
-
-export default SingleTicket;
-
-/*
-          <div class="card border-success mb-3">
-              <div class="card-header bg-transparent border-success"></div>
-              <div class="card-body text-success">
-                <h5 class="card-title">Created on: {moment(ticket.oDate).format('MMM Do YYYY, h:mma')}</h5>
-                <p class="card-text">
-                  Close Date: {ticket.cDate ? moment(ticket.cDate).format('MM-DD-YYYY') : '_'}</p>
-              </div>
-              <div class="card-footer bg-transparent border-success">Last Update: {moment(ticket.uDate).fromNow()}</div>
-            </div>
 */
