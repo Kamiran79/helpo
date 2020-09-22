@@ -4,12 +4,13 @@ import Card from 'react-bootstrap/Card';
 import Chart from 'react-apexcharts';
 
 import ticketsData from '../../helpers/data/ticketsData';
-import authData from '../../helpers/data/authData';
+// import authData from '../../helpers/data/authData';
 // import './MyTickets.scss';
 
 class MyTickets extends React.Component {
   static propTypes = {
     new: PropTypes.number.isRequired,
+    department: PropTypes.string.isRequired,
   }
 
   state = {
@@ -19,13 +20,15 @@ class MyTickets extends React.Component {
   }
 
   getAllTickets = () => {
-    ticketsData.getTicketsByUid(authData.getUid())
+    console.warn('this is department props', this.props.department);
+    ticketsData.getAllTicketByAssignDepartment(this.props.department)
       .then((backtickets) => {
         let tickets = [];
         tickets = backtickets.filter((ticket) => ticket.status === 'Open');
         const openCount = tickets.length;
         tickets = backtickets.filter((ticket) => ticket.status === 'New');
         const newCount = tickets.length;
+        this.props.new = tickets.length;
         tickets = backtickets.filter((ticket) => ticket.status === 'Resolved');
         const resolvedCount = tickets.length;
 

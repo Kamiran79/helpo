@@ -47,7 +47,7 @@ class NewTicket extends React.Component {
     resolution: '',
     dDate: new Date(),
     // imgUrl: '',
-    // isImg: false,
+    isImgAttached: false,
     imageAsFile: '',
     imageAsUrl: '',
   }
@@ -110,11 +110,81 @@ class NewTicket extends React.Component {
     e.preventDefault();
     // const imgUrl, isImg } = this.state;
     // let isImg = false;
-    const storageRef = firebase.storage().ref(`ticketsImg/${this.state.imageAsFile}`);
-    storageRef.getDownloadURL().then((url) => {
-      console.warn('this is the url for the image ', url);
-      // let imgUrl = '';
-      // let isImg = false;
+    if (this.state.imageAsFile !== '') {
+      const storageRef = firebase.storage().ref(`ticketsImg/${this.state.imageAsFile}`);
+      storageRef.getDownloadURL().then((url) => {
+        console.warn('this is the url for the image ', url);
+        // let imgUrl = '';
+        // let isImg = false;
+        const keysIWant = [
+          'ticketNumber',
+          'cUid',
+          'oDate',
+          'cDate',
+          'uDate',
+          'author',
+          'department',
+          'category',
+          // 'toAddress',
+          'assignTo',
+          'subject',
+          'details',
+          'status',
+          'priority',
+          'dDate',
+          'resolution',
+        ];
+        const newTicket = _.pick(this.state, keysIWant);
+        newTicket.uid = authData.getUid();
+        newTicket.isClose = false;
+        if (url !== '') {
+          // this.setImge(url);
+          // this.myImges = url;
+          newTicket.imgUrl = url;
+          newTicket.isImg = true;
+          ticketsData.createTicket(newTicket)
+            .then((res) => {
+              this.props.history.push(`/singleTicket/${res.data.name}`);
+            })
+            .catch((err) => console.error('new tickets broke', err));
+          // isImg = true;
+          // this.state.imageAsUrl((prevObject) => ({ ...prevObject, imgUrl: url }));
+          // this.allInput.imgUrl = url;
+          // imgUrl = url;
+          // this.setState({ imgUrl: url });
+          // this.setState({ isImg: true });
+          // console.warn('access to add object and url is ', this.state.imageAsUrl);
+          /*
+          const follow = 1;
+          const newTicketFollow = {
+            ticketId: '',
+            ticketNumber: this.state.ticketNumber,
+            uid: this.state.cUid,
+            followNumber: follow,
+            uDate: this.state.oDate,
+            responseName: this.state.author,
+            imgUrl: url,
+            isImg: true,
+            description: 'first attached file for the issue',
+            linkRef: 'this.state.imageAsUrl',
+          };
+          ticketsFollowData.createTicketFollow(newTicketFollow)
+            .then()
+            .catch((err) => console.error(err));
+          */
+        } else {
+          newTicket.imgUrl = '';
+          newTicket.isImg = false;
+          ticketsData.createTicket(newTicket)
+            .then((res) => {
+              this.props.history.push(`/singleTicket/${res.data.name}`);
+            })
+            .catch((err) => console.error('new tickets broke', err));
+          console.warn('failure to upload ?? url is ', this.state.imageAsUrl);
+        }
+        // this.setState({ imageAsUrl: url });
+      });
+    } else {
       const keysIWant = [
         'ticketNumber',
         'cUid',
@@ -136,53 +206,15 @@ class NewTicket extends React.Component {
       const newTicket = _.pick(this.state, keysIWant);
       newTicket.uid = authData.getUid();
       newTicket.isClose = false;
-      if (url !== '') {
-        // this.setImge(url);
-        // this.myImges = url;
-        newTicket.imgUrl = url;
-        newTicket.isImg = true;
-        ticketsData.createTicket(newTicket)
-          .then((res) => {
-            this.props.history.push(`/singleTicket/${res.data.name}`);
-          })
-          .catch((err) => console.error('new tickets broke', err));
-        // isImg = true;
-        // this.state.imageAsUrl((prevObject) => ({ ...prevObject, imgUrl: url }));
-        // this.allInput.imgUrl = url;
-        // imgUrl = url;
-        // this.setState({ imgUrl: url });
-        // this.setState({ isImg: true });
-        // console.warn('access to add object and url is ', this.state.imageAsUrl);
-        /*
-        const follow = 1;
-        const newTicketFollow = {
-          ticketId: '',
-          ticketNumber: this.state.ticketNumber,
-          uid: this.state.cUid,
-          followNumber: follow,
-          uDate: this.state.oDate,
-          responseName: this.state.author,
-          imgUrl: url,
-          isImg: true,
-          description: 'first attached file for the issue',
-          linkRef: 'this.state.imageAsUrl',
-        };
-        ticketsFollowData.createTicketFollow(newTicketFollow)
-          .then()
-          .catch((err) => console.error(err));
-        */
-      } else {
-        newTicket.imgUrl = '';
-        newTicket.isImg = false;
-        ticketsData.createTicket(newTicket)
-          .then((res) => {
-            this.props.history.push(`/singleTicket/${res.data.name}`);
-          })
-          .catch((err) => console.error('new tickets broke', err));
-        console.warn('failure to upload ?? url is ', this.state.imageAsUrl);
-      }
-      // this.setState({ imageAsUrl: url });
-    });
+      newTicket.imgUrl = '';
+      newTicket.isImg = false;
+      ticketsData.createTicket(newTicket)
+        .then((res) => {
+          this.props.history.push(`/singleTicket/${res.data.name}`);
+        })
+        .catch((err) => console.error('new tickets broke', err));
+    }
+
     const ticketNumberUpdate = {
       ticketNumber: 0,
     };
@@ -276,10 +308,13 @@ class NewTicket extends React.Component {
     this.setState({ imageAsFile: image });
     console.warn('image file name ', image);
     firebase.storage().ref(`ticketsImg/${image}`).put(file).then(() => {});
+    const { isImgAttached } = true;
+    this.setState({ isImgAttached });
     // const storageRef = firebase.storage().ref(`ticketsImg/${image}`);
     // storageRef.getDownloadURL().then((url) => {
     //   console.warn('this is the url for the image ', url);
     // });
+    console.warn('isUmage status', this.state.isImgAttached);
   };
 
   render() {
@@ -339,7 +374,7 @@ class NewTicket extends React.Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="author">Created By</label>
+            <label htmlFor="author"><i class="fas fa-portrait"></i> Created By</label>
             <input
               type="text"
               className="form-control"
@@ -352,7 +387,7 @@ class NewTicket extends React.Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="department">Department</label>
+            <label htmlFor="department"><i class="far fa-building"></i> Department</label>
             <input
               type="text"
               className="form-control"
@@ -413,7 +448,7 @@ class NewTicket extends React.Component {
           */}
 
           <div className="form-group">
-            <label htmlFor="Assign To">Assign To</label>
+            <label htmlFor="Assign To"><i class="fas fa-at"></i> Assign To</label>
             <select
               value={forAssignTo}
               onChange={this.changeAssignToEvent}
@@ -433,7 +468,7 @@ class NewTicket extends React.Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="Subject">Subject</label>
+            <label htmlFor="Subject"><i class="fab fa-ethereum"></i> Subject</label>
             <input
               type="text"
               className="form-control"
@@ -446,7 +481,7 @@ class NewTicket extends React.Component {
           </div>
 
           <div class="form-group">
-            <label htmlfor="details">Issue details</label>
+            <label htmlfor="details"><i class="fas fa-exclamation-triangle"></i> Issue details</label>
             <textarea
               class="form-control"
               id="details"
@@ -458,7 +493,7 @@ class NewTicket extends React.Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="status">status</label>
+            <label htmlFor="status"><i class="fas fa-shield-alt"></i> status</label>
             <input
               type="text"
               className="form-control"

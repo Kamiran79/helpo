@@ -319,7 +319,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="author">Created By</label>
+                <label htmlFor="author"><i class="fas fa-portrait"></i> Created By</label>
                 <input
                   type="text"
                   className="form-control"
@@ -333,7 +333,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
             </div>
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="department">Department <i class="far fa-building"></i></label>
+                <label htmlFor="department"><i class="far fa-building"></i> Department</label>
                 <input
                   type="text"
                   className="form-control"
@@ -379,7 +379,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
             </div>
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="assigntTo">Assignt To <i class="fas fa-at"></i></label>
+                <label htmlFor="assigntTo"><i class="fas fa-at"></i> Assignt To</label>
                 <input
                   type="text"
                   className="form-control"
@@ -403,7 +403,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           </div>
 
           <div className="form-group">
-            <label htmlFor="Subject">Subject</label>
+            <label htmlFor="Subject"><i class="fab fa-ethereum"></i> Subject</label>
             <input
               type="text"
               className="form-control"
@@ -417,7 +417,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           </div>
 
           <div class="form-group">
-            <label htmlfor="details">Issue details <i class="fas fa-exclamation-triangle"></i></label>
+            <label htmlfor="details"><i class="fas fa-exclamation-triangle"></i>Issue details</label>
             <textarea
               class="form-control"
               id="details"
@@ -432,7 +432,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="status">status <i class="fas fa-shield-alt"></i></label>
+                <label htmlFor="status"><i class="fas fa-shield-alt"></i> status</label>
                 <select
                   value={forStatus}
                   onChange={this.changeStatusEvent}
@@ -473,7 +473,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           </div>
 
           <div class="form-group">
-            <label htmlfor="details">Response Notes <i class="fas fa-reply"></i></label>
+            <label htmlfor="details"><i class="fas fa-reply"></i> Response Notes</label>
             <textarea
               class="form-control"
               id="details"
@@ -485,7 +485,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           </div>
 
           <div class="form-group">
-            <label htmlfor="resolution">Resolution <i class="fas fa-tools"></i></label>
+            <label htmlfor="resolution"><i class="fas fa-tools"></i> Resolution</label>
             <textarea
               class="form-control"
               id="resolution"

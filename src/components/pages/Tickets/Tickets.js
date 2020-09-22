@@ -88,7 +88,7 @@ class Tickets extends React.Component {
 
       if (tickeLink === 'link2') {
         return (
-          <AssignedTickets new={this.state.newCount} tickets={this.state.tickets}/>
+          <AssignedTickets new={this.state.newCount} tickets={this.state.tickets} department={this.state.department}/>
         );
       }
 
