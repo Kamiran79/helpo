@@ -38,13 +38,14 @@ class Tickets extends React.Component {
     ticketsData.getTicketsByUid(authData.getUid())
       .then((backtickets) => {
         let tickets1 = [];
+        const tickets = backtickets;
         tickets1 = backtickets.filter((ticket) => ticket.status === 'Open');
         const openCount = tickets1.length;
         tickets1 = backtickets.filter((ticket) => ticket.status === 'New');
         const newCount = tickets1.length;
         tickets1 = backtickets.filter((ticket) => ticket.status === 'Resolved');
         const resolvedCount = tickets1.length;
-        const { tickets } = backtickets;
+        // const { tickets } = backtickets;
         this.setState({
           openCount,
           newCount,

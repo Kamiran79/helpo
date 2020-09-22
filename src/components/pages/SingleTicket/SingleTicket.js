@@ -14,6 +14,7 @@ import ticketsData from '../../../helpers/data/ticketsData';
 import './SingleTicket.scss';
 import ticketsFollowData from '../../../helpers/data/ticketsFollowData';
 import FollowTickets from '../../shared/FollowTickets/FollowTickets';
+// import smashData from '../../../helpers/data/smashData';
 
 /*
 class SingleTicket extends React.Component {
@@ -85,7 +86,7 @@ const SingleTicket = (props) => {
   };
 
   // const responseToTicket = 'responseTicket';
-  const ticketsFollowCard = ticketsFollow.map((ticketFollow) => <FollowTickets key={ticketFollow.id} ticket={ticketFollow}/>);
+  const ticketsFollowCard = ticketsFollow.map((ticketFollow) => <FollowTickets key={ticketFollow.id} ticketFollow={ticketFollow}/>);
 
   return (
     <div className="SingleTicket mt-3 p-3 singleTicket_card rounded">

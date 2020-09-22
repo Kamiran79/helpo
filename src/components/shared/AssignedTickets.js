@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Chart from 'react-apexcharts';
 
+// import Ticket from './Ticket';
+
 import ticketsData from '../../helpers/data/ticketsData';
 // import authData from '../../helpers/data/authData';
 // import './MyTickets.scss';
@@ -17,22 +19,30 @@ class MyTickets extends React.Component {
     openCount: 0,
     newCount: 0,
     resolvedCount: 0,
+    tickets: [],
   }
 
   getAllTickets = () => {
     console.warn('this is department props', this.props.department);
     ticketsData.getAllTicketByAssignDepartment(this.props.department)
-      .then((backtickets) => {
-        let tickets = [];
-        tickets = backtickets.filter((ticket) => ticket.status === 'Open');
-        const openCount = tickets.length;
-        tickets = backtickets.filter((ticket) => ticket.status === 'New');
-        const newCount = tickets.length;
-        this.props.new = tickets.length;
-        tickets = backtickets.filter((ticket) => ticket.status === 'Resolved');
-        const resolvedCount = tickets.length;
-
-        this.setState({ openCount, newCount, resolvedCount });
+      .then((tickets) => {
+        let ticketsAssigned = [];
+        // const ticketsAssigned = [];
+        // ticketsAssigned.push(backtickets);
+        ticketsAssigned = tickets.filter((ticket) => ticket.status === 'Open');
+        const openCount = ticketsAssigned.length;
+        ticketsAssigned = tickets.filter((ticket) => ticket.status === 'New');
+        const newCount = ticketsAssigned.length;
+        // this.props.new = tickets.length;
+        ticketsAssigned = tickets.filter((ticket) => ticket.status === 'Resolved');
+        const resolvedCount = ticketsAssigned.length;
+        console.warn('ticket assigned', tickets);
+        this.setState({
+          openCount,
+          newCount,
+          resolvedCount,
+          tickets,
+        });
       })
       .catch((err) => console.error('get tickets broke!!', err));
   };
@@ -43,8 +53,8 @@ class MyTickets extends React.Component {
 
   constructor(props) {
     super(props);
-    const { resolvedCount, openCount, newCount } = this.state;
-    console.warn(resolvedCount, openCount, newCount);
+    // const { resolvedCount, openCount, newCount } = this.state;
+    // console.warn(resolvedCount, openCount, newCount);
     this.state = {
       options: {
         chart: {
@@ -56,12 +66,28 @@ class MyTickets extends React.Component {
       },
       series: [{
         name: 'series-1',
-        data: [this.props.new, 4, 1, 2, 1, 3, 0, 1],
+        data: [this.props.new, 4, 1, 2, 1, 3, this.state.newCount, 1],
       }],
     };
   }
 
+  deleteTicket = (ticketId) => {
+    ticketsData.deleteTicket(ticketId)
+      .then(() => this.getAllTickets())
+      .catch((err) => console.error(err));
+  }
+
   render() {
+    const { tickets } = this.state;
+    console.warn('ticket assigned array ', tickets.id);
+    /*
+    let ticketsCard;
+    if (!ticketsAssigned) {
+      ticketsCard = <Ticket key={ticketsAssigned.id} ticket={ticketsAssigned} deleteTicket={this.deleteTicket}/>;
+    } else {
+      ticketsCard = ticketsAssigned.map((ticket) => <Ticket key={ticket.id} ticket={ticket} deleteTicket={this.deleteTicket}/>);
+    }         {ticketsCard}
+    */
     return (
       <div className="MyTickets">
          <Card>
@@ -80,6 +106,9 @@ class MyTickets extends React.Component {
             </blockquote>
           </Card.Body>
         </Card>
+        <div>
+
+        </div>
       </div>
     );
   }

@@ -308,13 +308,6 @@ class NewTicket extends React.Component {
     this.setState({ imageAsFile: image });
     console.warn('image file name ', image);
     firebase.storage().ref(`ticketsImg/${image}`).put(file).then(() => {});
-    const { isImgAttached } = true;
-    this.setState({ isImgAttached });
-    // const storageRef = firebase.storage().ref(`ticketsImg/${image}`);
-    // storageRef.getDownloadURL().then((url) => {
-    //   console.warn('this is the url for the image ', url);
-    // });
-    console.warn('isUmage status', this.state.isImgAttached);
   };
 
   render() {
