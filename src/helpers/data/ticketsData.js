@@ -33,9 +33,10 @@ const getAllTicketByAssignDepartment = (department) => new Promise((resolve, rej
         Object.keys(ticketFollowObjects).forEach((ticketId) => {
           // const ticket = alltickets[ticketId];
           ticketFollowObjects[ticketId].id = ticketId;
-          if (ticketFollowObjects[ticketId].assignTo === `${department}` || ticketFollowObjects[ticketId].assignTo === 'Myself') {
-            mytickets.push(ticketFollowObjects[ticketId]);
-          }
+          mytickets.push(ticketFollowObjects[ticketId]);
+          // if (ticketFollowObjects[ticketId].assignTo === `${department}` || ticketFollowObjects[ticketId].assignTo === 'Myself') {
+          //  mytickets.push(ticketFollowObjects[ticketId]);
+          // }
         });
       }
       resolve(mytickets);

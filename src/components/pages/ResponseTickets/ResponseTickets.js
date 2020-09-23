@@ -115,7 +115,7 @@ class ResponseTickets extends React.Component {
           status: data.status,
           subject: data.subject,
           ticketNumber: data.ticketNumber,
-          uDate: new Date(data.uDate),
+          uDate: new Date(),
           uid: data.uid,
         });
       })
@@ -196,7 +196,6 @@ class ResponseTickets extends React.Component {
       'ticketNumber',
       'cUid',
       'oDate',
-      'cDate',
       'uDate',
       'author',
       'department',
@@ -216,6 +215,7 @@ class ResponseTickets extends React.Component {
     ];
 
     const editedTicket = _.pick(this.state, keysIWant);
+    editedTicket.cDate = new Date();
     ticketsData.updateTicket(ticketId, editedTicket)
       .then((res) => {
         console.warn('should updated that ticket about to go display ticket', res.data.name);
@@ -294,7 +294,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
         <h2 className="float-right">Replay to Ticket </h2>
         <br />
         <hr />
-        <form className="col-8 offset-2">
+        <form className="col-8 offset-2 shadow p-3 bg-info mb-3 rounded">
           <div class="form-row mt-5">
             <div class="form-group col-md-6">
               <label htmlFor="oDate">Open Date: {'  '}</label>

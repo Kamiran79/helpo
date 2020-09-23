@@ -40,7 +40,7 @@ class Ticket extends React.Component {
     const editLink = `/edit/${ticket.id}`;
     return (
       <div className="col-12 mb-3">
-        <div className="card text-center boarder-0" style={{ background: '#F2AC29' }}>
+        <div className="card text-center shadow p-3 mb-3 rounded boarder-0" style={{ background: '#F2AC29' }}>
           <div className="card-header">
             <div className="row">
 

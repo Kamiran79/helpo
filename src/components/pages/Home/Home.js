@@ -40,7 +40,7 @@ class Home extends React.Component {
 
         <div className="row">
           <div className="col-4">
-            <div class="card text-white bg-danger mb-3">
+            <div class="card text-white bg-danger mb-3 shadow p-3 rounded">
               <div class="card-header">New tickets</div>
               <div class="card-body">
                 <h5 class="card-title">{newCount} New</h5>
@@ -49,7 +49,7 @@ class Home extends React.Component {
             </div>
           </div>
           <div className="col-4">
-          <div class="card text-white bg-primary mb-3">
+          <div class="card text-white bg-primary mb-3 shadow p-3 rounded">
               <div class="card-header">Responed Tickets (Opened)</div>
               <div class="card-body">
                 <h5 class="card-title">{openCount} Opened</h5>
@@ -58,7 +58,7 @@ class Home extends React.Component {
             </div>
           </div>
           <div className="col-4">
-          <div class="card text-white bg-success mb-3">
+          <div class="card text-white bg-success mb-3 shadow p-3 rounded">
               <div class="card-header">Resolved Ticktes</div>
               <div class="card-body">
                 <h5 class="card-title">{resolvedCount} Resloved</h5>
@@ -69,7 +69,7 @@ class Home extends React.Component {
         </div>
         <div className="row">
           <div className="col-12">
-            <div class="card text-white bg-info mb-3">
+            <div class="card text-white bg-info mb-3 shadow p-3 rounded">
               <div class="card-header">Knowledge Base Update</div>
               <div class="card-body">
                 <h5 class="card-title">Most Pinned Topic</h5>

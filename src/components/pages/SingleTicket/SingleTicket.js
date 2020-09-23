@@ -102,7 +102,7 @@ const SingleTicket = (props) => {
         <Card className="shadow p-3 mb-3 bg-light rounded popForm_singleTicket">
           <CardBody >
             <div className="row">
-            <span className="fieldName_singleTicket bg-dark"><i class="fas fa-portrait"></i> Created on:</span><h5 className="createdOn_singleTicket infoField_singleTicket">{moment(ticket.oDate).format('MMM Do YYYY, h:mma')}</h5>
+            <span className="fieldName_singleTicket bg-dark"> Created on:</span><h5 className="createdOn_singleTicket infoField_singleTicket">{moment(ticket.oDate).format('MMM Do YYYY, h:mma')}</h5>
             </div>
             <hr />
             <div className="row">
@@ -128,7 +128,7 @@ const SingleTicket = (props) => {
       <hr />
       <div className="card shadow p-3 mb-3 bg-light rounded">
         <div className="card-body">
-          <h5 className="card-title mb-1"><span className="fieldName_singleTicket bg-dark">Created By:</span> {ticket.author}</h5>
+          <h5 className="card-title mb-1"><span className="fieldName_singleTicket bg-dark"><i class="fas fa-portrait"></i> Created By:</span> {ticket.author}</h5>
           <ul className="list-group list-group-flush">
             <li className="list-group-item"><span className="font-weight-bold"><i class="far fa-building"></i> Department:</span> {ticket.department}</li>
             <li className="list-group-item"><span className="font-weight-bold">Category:</span> {ticket.category}</li>

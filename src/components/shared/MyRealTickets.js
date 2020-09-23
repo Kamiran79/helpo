@@ -120,10 +120,10 @@ class MyRealTickets extends React.Component {
     const ticketsCard = tickets.map((ticket) => <Ticket key={ticket.id} ticket={ticket} deleteTicket={this.deleteTicket}/>);
     return (
       <div className="MyRealTickets">
-        <h2> Request Tickets </h2>
+        <h2 className="shadow p-3 mb-3 rounded"> Request Tickets </h2>
         {/* <button className="btn btn-info">I am a button</button> */}
-        <ButtonGroup className="mb-2">
-          <Button className="btn btn-primary" onClick={this.newTicketEvent}>New Ticket</Button>
+        <ButtonGroup className="mb-2 shadow p-3 mb-3 rounded" >
+          <Button className="btn btn-dark" onClick={this.newTicketEvent}>New Ticket</Button>
           {/* <Link className="btn btn-primary" to='/newTicket'>New Ticket</Link> */}
           {/* <Button>Filter</Button> */}
           <ButtonDropdown isOpen={this.state.dropdownOpen1} toggle={this.toggle1}>
@@ -146,7 +146,7 @@ class MyRealTickets extends React.Component {
             </DropdownMenu>
           </ButtonDropdown>
         </ButtonGroup>
-        <div className="card-group">
+        <div className="card-group shadow p-3 mb-3 rounded">
           {ticketsCard}
         </div>
       </div>

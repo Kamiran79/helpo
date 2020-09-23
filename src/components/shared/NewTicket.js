@@ -344,7 +344,7 @@ class NewTicket extends React.Component {
         <h2 className="float-right">Ticket Details</h2>
         <br />
         <hr />
-        <form className="col-8 offset-2">
+        <form className="col-8 offset-2 shadow p-3 bg-primary mb-3 rounded">
           <div class="form-row mt-5">
             <div class="form-group col-md-6">
               <label htmlFor="oDate">Open Date: {'  '}</label>
