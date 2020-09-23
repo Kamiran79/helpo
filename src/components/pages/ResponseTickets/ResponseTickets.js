@@ -8,6 +8,7 @@ import _ from 'underscore';
 import authData from '../../../helpers/data/authData';
 import ticketsFollowData from '../../../helpers/data/ticketsFollowData';
 import ticketsData from '../../../helpers/data/ticketsData';
+import usersData from '../../../helpers/data/usersData';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './ResponseTickets.scss';
@@ -115,11 +116,21 @@ class ResponseTickets extends React.Component {
           status: data.status,
           subject: data.subject,
           ticketNumber: data.ticketNumber,
-          uDate: new Date(data.uDate),
+          uDate: new Date(),
           uid: data.uid,
         });
       })
       .catch((err) => console.error('get ticket by id faild ', err));
+    usersData.getUserByUid(authData.getUid())
+      .then((res) => {
+        // console.warn('uid ', uid);
+        // console.warn('user name ', res[0].name);
+        this.setState({
+          replayName: res[0].name,
+          // department: res[0].department,
+        });
+      })
+      .catch((err) => console.error('read user error ', err));
   }
 
   saveFollowTicket = (e) => {
@@ -196,7 +207,6 @@ class ResponseTickets extends React.Component {
       'ticketNumber',
       'cUid',
       'oDate',
-      'cDate',
       'uDate',
       'author',
       'department',
@@ -216,6 +226,7 @@ class ResponseTickets extends React.Component {
     ];
 
     const editedTicket = _.pick(this.state, keysIWant);
+    editedTicket.cDate = new Date();
     ticketsData.updateTicket(ticketId, editedTicket)
       .then((res) => {
         console.warn('should updated that ticket about to go display ticket', res.data.name);
@@ -294,10 +305,10 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
         <h2 className="float-right">Replay to Ticket </h2>
         <br />
         <hr />
-        <form className="col-8 offset-2">
+        <form className="col-8 offset-2 shadow p-3 bg-info mb-3 rounded">
           <div class="form-row mt-5">
             <div class="form-group col-md-6">
-              <label htmlFor="oDate">Open Date: {'  '}</label>
+              <label htmlFor="oDate"><i class="fas fa-calendar-alt"></i> Open Date: {'  '}</label>
               <DatePicker
                 class="form-control"
                 selected={oDate}
@@ -307,7 +318,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
               />
             </div>
             <div class="form-group col-md-6">
-              <label htmlFor="uDate">Update Date: {'  '}</label>
+              <label htmlFor="uDate"><i class="fas fa-calendar-alt"></i> Update Date: {'  '}</label>
               <DatePicker
                 class="form-control"
                 selected={uDate}
@@ -319,7 +330,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="author">Created By</label>
+                <label htmlFor="author"><i class="fas fa-portrait"></i> Created By</label>
                 <input
                   type="text"
                   className="form-control"
@@ -333,7 +344,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
             </div>
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="department">Department <i class="far fa-building"></i></label>
+                <label htmlFor="department"><i class="far fa-building"></i> Department</label>
                 <input
                   type="text"
                   className="form-control"
@@ -379,7 +390,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
             </div>
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="assigntTo">Assignt To <i class="fas fa-at"></i></label>
+                <label htmlFor="assigntTo"><i class="fas fa-at"></i> Assignt To</label>
                 <input
                   type="text"
                   className="form-control"
@@ -403,7 +414,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           </div>
 
           <div className="form-group">
-            <label htmlFor="Subject">Subject</label>
+            <label htmlFor="Subject"><i class="fab fa-ethereum"></i> Subject</label>
             <input
               type="text"
               className="form-control"
@@ -417,7 +428,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           </div>
 
           <div class="form-group">
-            <label htmlfor="details">Issue details <i class="fas fa-exclamation-triangle"></i></label>
+            <label htmlfor="details"><i class="fas fa-exclamation-triangle"></i>Issue details</label>
             <textarea
               class="form-control"
               id="details"
@@ -432,7 +443,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="status">status <i class="fas fa-shield-alt"></i></label>
+                <label htmlFor="status"><i class="fas fa-shield-alt"></i> status</label>
                 <select
                   value={forStatus}
                   onChange={this.changeStatusEvent}
@@ -463,7 +474,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
 
           <div className="form-group">
             <label htmlFor="dDate" className="mr-2">
-              Due Date:{' '}
+            <i class="fas fa-calendar-alt"></i> Due Date:{' '}
             </label>
             <DatePicker
               selected={dDate}
@@ -473,7 +484,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           </div>
 
           <div class="form-group">
-            <label htmlfor="details">Response Notes <i class="fas fa-reply"></i></label>
+            <label htmlfor="details"><i class="fas fa-reply"></i> Response Notes</label>
             <textarea
               class="form-control"
               id="details"
@@ -485,7 +496,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
           </div>
 
           <div class="form-group">
-            <label htmlfor="resolution">Resolution <i class="fas fa-tools"></i></label>
+            <label htmlfor="resolution"><i class="fas fa-tools"></i> Resolution</label>
             <textarea
               class="form-control"
               id="resolution"

@@ -1,25 +1,34 @@
 import axios from 'axios';
-
 import apiKeys from '../apiKeys.json';
+
+import utils from '../utils';
 
 const baseUrl = apiKeys.firebaseConfig.databaseURL;
 
 const getTicketsFollowByTicketId = (ticketId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/ticketsFollow.json?orderBy="ticketId"&equalTo="${ticketId}"`)
     .then((response) => {
-      const alltickets = response.data;
-      console.warn('ticketId passed ', ticketId);
-      console.warn('access to get follow ', response.data);
+      const ticketFollowObjects = response.data;
+      // console.warn('ticketId passed ', ticketId);
+      // console.warn('access to get follow ', response.data);
       const mytickets = [];
-      if (alltickets) {
-        Object.keys(alltickets).forEach((ticketFollowId) => {
-          const ticket = alltickets[ticketFollowId];
-          ticket.id = ticketFollowId;
-          mytickets.push(ticket);
+      if (ticketFollowObjects) {
+        Object.keys(ticketFollowObjects).forEach((ticketFollowId) => {
+          // const ticket = alltickets[ticketFollowId];
+          // ticket.id = ticketFollowId;
+          // mytickets.push(ticket);
+          ticketFollowObjects[ticketFollowId].id = ticketFollowId;
+          mytickets.push(ticketFollowObjects[ticketFollowId]);
         });
       }
       resolve(mytickets);
     })
+    .catch((err) => reject(err));
+});
+
+const getFollows = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/ticketsFollow.json`)
+    .then(({ data }) => resolve(utils.convertFirebaseCollection(data)))
     .catch((err) => reject(err));
 });
 
@@ -37,4 +46,5 @@ export default {
   deleteTicket,
   createTicketFollow,
   updateTicket,
+  getFollows,
 };

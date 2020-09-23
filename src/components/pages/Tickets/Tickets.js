@@ -38,13 +38,14 @@ class Tickets extends React.Component {
     ticketsData.getTicketsByUid(authData.getUid())
       .then((backtickets) => {
         let tickets1 = [];
+        const tickets = backtickets;
         tickets1 = backtickets.filter((ticket) => ticket.status === 'Open');
         const openCount = tickets1.length;
         tickets1 = backtickets.filter((ticket) => ticket.status === 'New');
         const newCount = tickets1.length;
         tickets1 = backtickets.filter((ticket) => ticket.status === 'Resolved');
         const resolvedCount = tickets1.length;
-        const { tickets } = backtickets;
+        // const { tickets } = backtickets;
         this.setState({
           openCount,
           newCount,
@@ -88,7 +89,7 @@ class Tickets extends React.Component {
 
       if (tickeLink === 'link2') {
         return (
-          <AssignedTickets new={this.state.newCount} tickets={this.state.tickets}/>
+          <AssignedTickets new={this.state.newCount} tickets={this.state.tickets} department={this.state.department}/>
         );
       }
 
@@ -109,13 +110,13 @@ class Tickets extends React.Component {
             <Nav.Link disabled></Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="/link1" id="link1" onClick={this.eventClick}>Dashboard</Nav.Link>
+            <Nav.Link href="/link1" id="link1" onClick={this.eventClick}><i class="fas fa-chart-pie"></i> Dashboard</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-3" id="link3" onClick={this.eventClick}>My Requests</Nav.Link>
+            <Nav.Link eventKey="link-3" id="link3" onClick={this.eventClick}><i class="far fa-folder-open"></i> My Requests</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-2" id="link2" onClick={this.eventClick}>Assigned Tickets</Nav.Link>
+            <Nav.Link eventKey="link-2" id="link2" onClick={this.eventClick}><i class="far fa-folder-open"></i> Assigned Tickets</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="link-4">Group Tickets</Nav.Link>
