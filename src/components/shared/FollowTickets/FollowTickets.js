@@ -22,7 +22,10 @@ class FollowTickets extends React.Component {
         <hr />
         <div className="card shadow p-3 mb-3 bg-dark rounded card_replay">
           <div className="card-body">
-            <h5 className="card-title mb-1"><span className="">Response By:</span> {moment(ticketFollow.dDate).format('MMM Do YYYY, h:mma')}</h5>
+            <h5 className="card-title mb-1">
+              <span className="">
+              <i class="fas fa-calendar-day"></i> Replay On:
+                </span> {moment(ticketFollow.dDate).format('MMM Do YYYY, h:mma')} - <i class="fas fa-user-circle"></i> By: {ticketFollow.replayName}</h5>
             <hr />
             <h6 >Response Details:</h6>
             <p>{ticketFollow.description}</p>

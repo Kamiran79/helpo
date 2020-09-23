@@ -95,26 +95,26 @@ const SingleTicket = (props) => {
       <hr />
       <h2 className="subject_singleTicket">{ticket.subject} #{ticket.ticketNumber}</h2>
       <Button className="float-left" color="light" id="toggler1" style={{ marginBottom: '1rem' }}>
-        <i class="fas fa-caret-down"></i> Dates
+        <i class="fas fa-caret-down"></i> Dates <i class="fas fa-calendar-alt"></i>
       </Button>
       {buildFollow}
       <UncontrolledCollapse toggler="#toggler1">
         <Card className="shadow p-3 mb-3 bg-light rounded popForm_singleTicket">
           <CardBody >
             <div className="row">
-            <span className="fieldName_singleTicket bg-dark"> Created on:</span><h5 className="createdOn_singleTicket infoField_singleTicket">{moment(ticket.oDate).format('MMM Do YYYY, h:mma')}</h5>
+            <span className="fieldName_singleTicket bg-dark"><i class="fas fa-calendar-day"></i> Created on:</span><h5 className="createdOn_singleTicket infoField_singleTicket">{moment(ticket.oDate).format('MMM Do YYYY, h:mma')}</h5>
             </div>
             <hr />
             <div className="row">
               <div className="col-6">
                 <div className="row">
-                  <span className="fieldName_singleTicket bg-dark">Last Update: </span>
+                  <span className="fieldName_singleTicket bg-dark"><i class="fas fa-calendar-day"></i> Last Update: </span>
                   <h5 className="infoField_singleTicket">{moment(ticket.uDate).fromNow()}</h5>
                 </div>
               </div>
               <div className="col-6">
                 <div className="row">
-                  <span className="fieldName_singleTicket bg-dark">Close Date:</span>
+                  <span className="fieldName_singleTicket bg-dark"><i class="fas fa-calendar-day"></i> Close Date:</span>
                   <h5 className="infoField_singleTicket">{ticket.cDate ? moment(ticket.cDate).format('MM-DD-YYYY') : '_'}</h5>
                 </div>
               </div>
@@ -154,7 +154,7 @@ const SingleTicket = (props) => {
             <hr />
             <div className="row">
               <div className="col-6">
-                <p><span className="fieldName_singleTicket bg-dark">Due Date:</span> {moment(ticket.dDate).format('MMM Do YYYY, h:mma')}</p>
+                <p><span className="fieldName_singleTicket bg-dark"><i class="fas fa-calendar-day"></i> Due Date:</span> {moment(ticket.dDate).format('MMM Do YYYY, h:mma')}</p>
               </div>
               <div className="col-6">
                 <p><span className="fieldName_singleTicket bg-dark">priority:</span> {ticket.priority}</p>

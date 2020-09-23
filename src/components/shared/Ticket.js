@@ -57,7 +57,7 @@ class Ticket extends React.Component {
             <div className="row">
               <div className="col-md-2 my_col">
                 <p className="card-text my_header">raised by</p>
-                <p className="card-text">{ticket.author}</p>
+                <p className="card-text"><i class="fas fa-user-circle"></i> {ticket.author}</p>
               </div>
               <div className="col-md-2 my_col">
                 <p className="card-text my_header">assigned to</p>
@@ -72,7 +72,7 @@ class Ticket extends React.Component {
                 <p className="card-title">{ticket.category}</p>
               </div>
               <div className="col-md-2 my_col">
-                <p className="card-text my_header">Close Date</p>
+                <p className="card-text my_header"><i class="fas fa-calendar-day"></i> Close Date</p>
                 <p className="card-text">{getFilterDate()}</p>
               </div>
             </div>

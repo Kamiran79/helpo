@@ -347,7 +347,7 @@ class NewTicket extends React.Component {
         <form className="col-8 offset-2 shadow p-3 bg-primary mb-3 rounded">
           <div class="form-row mt-5">
             <div class="form-group col-md-6">
-              <label htmlFor="oDate">Open Date: {'  '}</label>
+              <label htmlFor="oDate"><i class="fas fa-calendar-alt"></i> Open Date: {'  '}</label>
               <DatePicker
                 class="form-control"
                 selected={oDate}
@@ -356,7 +356,7 @@ class NewTicket extends React.Component {
               />
             </div>
             <div class="form-group col-md-6">
-              <label htmlFor="cDate">Close Date: {'  '}</label>
+              <label htmlFor="cDate"><i class="fas fa-calendar-alt"></i> Close Date: {'  '}</label>
               <DatePicker
                 class="form-control"
                 onChange={this.cDateEvent}
@@ -514,7 +514,7 @@ class NewTicket extends React.Component {
 
           <div className="form-group">
             <label htmlFor="dDate" className="mr-2">
-              Due Date:{' '}
+            <i class="fas fa-calendar-alt"></i> Due Date:{' '}
             </label>
             <DatePicker
               selected={dDate}

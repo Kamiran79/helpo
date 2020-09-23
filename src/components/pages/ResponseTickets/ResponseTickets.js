@@ -8,6 +8,7 @@ import _ from 'underscore';
 import authData from '../../../helpers/data/authData';
 import ticketsFollowData from '../../../helpers/data/ticketsFollowData';
 import ticketsData from '../../../helpers/data/ticketsData';
+import usersData from '../../../helpers/data/usersData';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './ResponseTickets.scss';
@@ -120,6 +121,16 @@ class ResponseTickets extends React.Component {
         });
       })
       .catch((err) => console.error('get ticket by id faild ', err));
+    usersData.getUserByUid(authData.getUid())
+      .then((res) => {
+        // console.warn('uid ', uid);
+        // console.warn('user name ', res[0].name);
+        this.setState({
+          replayName: res[0].name,
+          // department: res[0].department,
+        });
+      })
+      .catch((err) => console.error('read user error ', err));
   }
 
   saveFollowTicket = (e) => {
@@ -297,7 +308,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
         <form className="col-8 offset-2 shadow p-3 bg-info mb-3 rounded">
           <div class="form-row mt-5">
             <div class="form-group col-md-6">
-              <label htmlFor="oDate">Open Date: {'  '}</label>
+              <label htmlFor="oDate"><i class="fas fa-calendar-alt"></i> Open Date: {'  '}</label>
               <DatePicker
                 class="form-control"
                 selected={oDate}
@@ -307,7 +318,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
               />
             </div>
             <div class="form-group col-md-6">
-              <label htmlFor="uDate">Update Date: {'  '}</label>
+              <label htmlFor="uDate"><i class="fas fa-calendar-alt"></i> Update Date: {'  '}</label>
               <DatePicker
                 class="form-control"
                 selected={uDate}
@@ -463,7 +474,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
 
           <div className="form-group">
             <label htmlFor="dDate" className="mr-2">
-              Due Date:{' '}
+            <i class="fas fa-calendar-alt"></i> Due Date:{' '}
             </label>
             <DatePicker
               selected={dDate}

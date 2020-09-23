@@ -110,13 +110,13 @@ class Tickets extends React.Component {
             <Nav.Link disabled></Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="/link1" id="link1" onClick={this.eventClick}>Dashboard</Nav.Link>
+            <Nav.Link href="/link1" id="link1" onClick={this.eventClick}><i class="fas fa-chart-pie"></i> Dashboard</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-3" id="link3" onClick={this.eventClick}>My Requests</Nav.Link>
+            <Nav.Link eventKey="link-3" id="link3" onClick={this.eventClick}><i class="far fa-folder-open"></i> My Requests</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-2" id="link2" onClick={this.eventClick}>Assigned Tickets</Nav.Link>
+            <Nav.Link eventKey="link-2" id="link2" onClick={this.eventClick}><i class="far fa-folder-open"></i> Assigned Tickets</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="link-4">Group Tickets</Nav.Link>

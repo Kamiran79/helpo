@@ -123,7 +123,7 @@ class MyRealTickets extends React.Component {
         <h2 className="shadow p-3 mb-3 rounded"> Request Tickets </h2>
         {/* <button className="btn btn-info">I am a button</button> */}
         <ButtonGroup className="mb-2 shadow p-3 mb-3 rounded" >
-          <Button className="btn btn-dark" onClick={this.newTicketEvent}>New Ticket</Button>
+          <Button className="btn btn-dark" onClick={this.newTicketEvent}><i class="far fa-plus-square"></i> New Ticket</Button>
           {/* <Link className="btn btn-primary" to='/newTicket'>New Ticket</Link> */}
           {/* <Button>Filter</Button> */}
           <ButtonDropdown isOpen={this.state.dropdownOpen1} toggle={this.toggle1}>
