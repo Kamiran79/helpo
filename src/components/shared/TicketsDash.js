@@ -76,6 +76,25 @@ class TicketsDash extends React.Component {
           },
         }],
       },
+      series2: [this.props.resolved, this.props.open, 4, this.props.new],
+      options2: {
+        chart: {
+          width: 380,
+          type: 'pie',
+        },
+        labels: ['Open', 'Resolved', 'Pending', 'New'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: 'bottom',
+            },
+          },
+        }],
+      },
     };
   }
 
@@ -98,7 +117,7 @@ class TicketsDash extends React.Component {
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">Tickets by Priority</h5>
-                  <Chart options={this.state.options} series={this.state.series} type="pie" width={500} height={320} />
+                  <Chart options={this.state.options2} series={this.state.series2} type="pie" width={500} height={320} />
                   <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
 
                 </div>

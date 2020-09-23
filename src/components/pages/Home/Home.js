@@ -36,7 +36,7 @@ class Home extends React.Component {
     const { openCount, newCount, resolvedCount } = this.state;
     return (
       <div className="Home">
-        <h1>Today</h1>
+        <h1 className="home_header">Today</h1>
 
         <div className="row">
           <div className="col-4">
