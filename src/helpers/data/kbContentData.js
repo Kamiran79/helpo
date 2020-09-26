@@ -5,8 +5,8 @@ import utils from '../utils';
 
 const baseUrl = apiKeys.firebaseConfig.databaseURL;
 
-const getTicketsFollowByTicketId = (ticketId) => new Promise((resolve, reject) => {
-  axios.get(`${baseUrl}/ticketsFollow.json?orderBy="ticketId"&equalTo="${ticketId}"`)
+const getKBContentByKBId = (kbId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/kbContent.json?orderBy="kbId"&equalTo="${kbId}"`)
     .then((response) => {
       const ticketFollowObjects = response.data;
       // console.warn('ticketId passed ', ticketId);
@@ -23,7 +23,7 @@ const getTicketsFollowByTicketId = (ticketId) => new Promise((resolve, reject) =
       }
       // if you want reverse sort.
       // mytickets.sort((a, b) => ((a.uDate > b.uDate) ? 1 : -1)).reverse();
-      mytickets.sort((a, b) => ((a.uDate > b.uDate) ? 1 : -1));
+      mytickets.sort((a, b) => ((a.stepDate > b.stepDate) ? 1 : -1));
       resolve(mytickets);
     })
     .catch((err) => reject(err));
@@ -39,15 +39,15 @@ const getSingleTicketFollowById = (ticketId) => axios.get(`${baseUrl}/tickets/${
 
 const deleteTicket = (ticketId) => axios.delete(`${baseUrl}/tickets/${ticketId}.json`);
 
-const createTicketFollow = (newTicketFollow) => axios.post(`${baseUrl}/ticketsFollow.json`, newTicketFollow);
+const createKBContent = (newKBContent) => axios.post(`${baseUrl}/kbContent.json`, newKBContent);
 
 const updateTicket = (ticketId, editedTicket) => axios.put(`${baseUrl}/tickets/${ticketId}.json`, editedTicket);
 
 export default {
-  getTicketsFollowByTicketId,
+  getKBContentByKBId,
   getSingleTicketFollowById,
   deleteTicket,
-  createTicketFollow,
+  createKBContent,
   updateTicket,
   getFollows,
 };

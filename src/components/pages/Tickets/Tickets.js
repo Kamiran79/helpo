@@ -21,6 +21,7 @@ class Tickets extends React.Component {
     openCount: 0,
     newCount: 0,
     resolvedCount: 0,
+    pendingCount: 0,
   }
 
   updateTickets = (select) => {
@@ -45,11 +46,14 @@ class Tickets extends React.Component {
         const newCount = tickets1.length;
         tickets1 = backtickets.filter((ticket) => ticket.status === 'Resolved');
         const resolvedCount = tickets1.length;
+        tickets1 = backtickets.filter((ticket) => ticket.status === 'Pending');
+        const pendingCount = tickets1.length;
         // const { tickets } = backtickets;
         this.setState({
           openCount,
           newCount,
           resolvedCount,
+          pendingCount,
           tickets,
         });
       })
@@ -81,6 +85,7 @@ class Tickets extends React.Component {
             new={this.state.newCount}
             open={this.state.openCount}
             resolved={this.state.resolvedCount}
+            pending={this.state.pendingCount}
             tickets={this.state.tickets}
           />
           // ticketDash;
@@ -119,11 +124,11 @@ class Tickets extends React.Component {
             <Nav.Link eventKey="link-2" id="link2" onClick={this.eventClick}><i class="far fa-folder-open"></i> Assigned Tickets</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-4">Group Tickets</Nav.Link>
+            <Nav.Link eventKey="link-4"></Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="disabled" disabled>
-            Disabled
+
             </Nav.Link>
           </Nav.Item>
         </Nav>

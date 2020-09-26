@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap');
+
+.myLogoNav {
+  /* font-family: 'Pacifico', cursive; */
+  font-family: 'Space Mono', monospace;
+  font-size: 25px;
+}
+
 .myNav {  
   color: #F2F2F2 !important;
 }
@@ -14,4 +23,8 @@
 .nav-link:hover {
   background: #F2AC29 !important;
   border-radius: 5px;
+}
+
+.log_class {
+  cursor: pointer;
 }

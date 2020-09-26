@@ -41,6 +41,7 @@ class ResponseTickets extends React.Component {
     imageAsFile: '',
     imageAsUrl: '',
     myTest: '',
+    myUrl: '',
   }
 
   changeCategoryEvent = (e) => {
@@ -62,7 +63,9 @@ class ResponseTickets extends React.Component {
   changeStatusEvent = (e) => {
     e.preventDefault();
     if (e.target.value === 'Resloved') {
-      this.setState({ status: e.target.value, isClose: true, cDate: new Date() });
+      const isClose = true;
+      this.setState({ status: e.target.value, isClose, cDate: new Date() });
+      console.warn('test the is close working or not ', isClose);
     }
     this.setState({ status: e.target.value, cDate: '' });
   };
@@ -199,8 +202,10 @@ class ResponseTickets extends React.Component {
 
     console.warn('should complished save follow next update ticket');
     const cdate = new Date();
+    let isClose = false;
     if (this.state.status === 'Resolved') {
       this.setState({ cdate });
+      isClose = true;
     }
 
     const keysIWant = [
@@ -227,6 +232,7 @@ class ResponseTickets extends React.Component {
 
     const editedTicket = _.pick(this.state, keysIWant);
     editedTicket.cDate = new Date();
+    editedTicket.isClose = isClose;
     ticketsData.updateTicket(ticketId, editedTicket)
       .then((res) => {
         console.warn('should updated that ticket about to go display ticket', res.data.name);
@@ -235,37 +241,29 @@ class ResponseTickets extends React.Component {
       .catch((err) => console.error('new tickets broke', err));
   };
 
-  /*
-assignTo: "Developer"
-author: "Kamiran"
-cDate: ""
-cUid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
-category: "Web"
-dDate: "2020-09-20T17:41:14.932Z"
-department: "E12"
-details: "I create a value img to be equal to ''. then I assign a string it show error. more explain in the attached file."
-imgUrl: "https://firebasestorage.googleapis.com/v0/b/helpo-57479.appspot.com/o/ticketsImg%2Fissue1.PNG?alt=media&token=966f2fe6-c20c-409e-a28f-dd4108e07361"
-isClose: false
-isImg: true
-oDate: "2020-09-20T17:41:14.932Z"
-priority: "Low"
-resolution: ""
-status: "New"
-subject: "Issue with assign value and reuse"
-ticketNumber: 36
-uDate: "2020-09-20T17:41:14.932Z"
-uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
-*/
-
   uploadImage = () => {
     const file = document.getElementById('ticket-image').files[0];
     const image = file.name;
     // const { imageAsFile } = this.state;
     this.setState({ imageAsFile: image });
     console.warn('image file name ', image);
-    firebase.storage().ref(`ticketsImg/${image}`).put(file).then(() => {});
-    const isImgFollow = true;
-    this.setState({ isImgFollow });
+    firebase.storage().ref(`ticketsImg/${image}`).put(file).then((res) => {
+      // const { bucket, path } = res.ref.location;
+      const storageRef = firebase.storage().ref(`ticketsImg/${this.state.imageAsFile}`);
+      storageRef.getDownloadURL().then((url) => {
+        const myUrl = url;
+        this.setState({ myUrl });
+        // const url = `${bucket}/${path}`;
+        // console.warn('bucket', bucket, path);
+        // console.warn('url', url);
+        const isImgFollow = true;
+        this.setState({ isImgFollow });
+        console.warn(this.state.myUrl);
+        console.warn(this.state.isImgFollow);
+      });
+      // Put code here that getes executed after image is saved
+    });
+
     // const storageRef = firebase.storage().ref(`ticketsImg/${image}`);
     // storageRef.getDownloadURL().then((url) => {
     //   console.warn('this is the url for the image ', url);
@@ -292,7 +290,7 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
       details,
       resolution,
       status,
-      forStatus,
+      // forStatus,
       priority,
       forPriority,
       dDate,
@@ -301,8 +299,8 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
     } = this.state;
     return (
       <div className="NewTicket col-12">
-        <h2 className="float-left">Response Ticket</h2>
-        <h2 className="float-right">Replay to Ticket </h2>
+        <h2 className="float-left singleTicket_title">Response Ticket</h2>
+        <h2 className="float-right singleTicket_title">Replay to Ticket </h2>
         <br />
         <hr />
         <form className="col-8 offset-2 shadow p-3 bg-info mb-3 rounded">
@@ -357,52 +355,48 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
               </div>
             </div>
           </div>
-          {/*
-          <div class="form-group">
-            <label htmlFor="Department">Department</label>
-            <select
-              value={forDepartment}
-              onChange={this.changeDepartmentEvent}
-              class="form-control"
-              id="department">
-              <option>Please Select a Department</option>
-              <option value='E12'>E12</option>
-              <option value='Developer'>Developer</option>
-              <option value='IT'>IT</option>
-              <option value='Others'>Others</option>
-            </select>
-          </div>
-          */}
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="Category">Category</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="category"
-                  placeholder={category}
+                <label htmlFor="Category"><i class="fas fa-puzzle-piece"></i> Category</label>
+                <select
                   value={category}
                   onChange={this.changeCategoryEvent}
-                  disabled
-                />
+                  className="form-control"
+                  id="category"
+                  required>
+                  <option value={category}>{category}</option>
+                  <option value='Web'>Web</option>
+                  <option value='Application'>Application</option>
+                  <option value='Systems'>Systems</option>
+                  <option value='Others'>Others</option>
+                </select>
               </div>
             </div>
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="assigntTo"><i class="fas fa-at"></i> Assignt To</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="assignTo"
-                  placeholder="Select to assign to"
+                <label htmlFor="Assign To"><i class="fas fa-at"></i> Assign To</label>
+                <select
                   value={assignTo}
                   onChange={this.changeAssignToEvent}
-                  disabled
-                />
+                  className="form-control"
+                  id="toAddress">
+                  <option>Please Select a Options Below:</option>
+                  <option value={assignTo}>{assignTo}</option>
+                  <option value='IT'>IT</option>
+                  <option value='E11'>E11</option>
+                  <option value='E12'>E12</option>
+                  <option value='E13'>E13</option>
+                  <option value='Developer'>Developer</option>
+                  <option value='Accounting'>Accounting</option>
+                  <option value='Engineering'>Engineering</option>
+                  <option value='Myself'>MySelf</option>
+                  <option value='Others'>Others</option>
+                </select>
               </div>
             </div>
           </div>
+
           <div className="row">
             <div className="col-md-6"></div>
             <div className="col-md-6"></div>
@@ -445,12 +439,13 @@ uid: "lysPjDu7HyPRBLhOYeZ44Ha0YoU2"
               <div className="form-group">
                 <label htmlFor="status"><i class="fas fa-shield-alt"></i> status</label>
                 <select
-                  value={forStatus}
+                  value={status}
                   onChange={this.changeStatusEvent}
                   class="form-control"
                   id="status">
                   <option value={status}>{status}</option>
                   <option value='Open'>Open</option>
+                  <option value='Pending'>Pending</option>
                   <option value='Resolved'>Resolved</option>
                 </select>
               </div>
@@ -577,4 +572,95 @@ export default ResponseTickets;
             </select>
           </div>
 
+*/
+
+/*
+      const storageRef = firebase.storage().ref(`ticketsImg/${this.state.imageAsFile}`);
+      storageRef.getDownloadURL().then((url) => {
+        console.warn('this is the url for the image ', url);
+        console.warn('access to saveFollow should now got URL if there is any');
+        // let imgUrl = '';
+        // let isImg = false;
+        const keysIWantFollow = [
+          'ticketNumber',
+          'uDate',
+          'replayName',
+          'description',
+          'imgUrlFollow',
+          'isImgFollow',
+          'uid',
+        ];
+        const newTicketFollow = _.pick(this.state, keysIWantFollow);
+        newTicketFollow.uid = authData.getUid();
+        newTicketFollow.ticketId = ticketId;
+        if (url !== '') {
+          newTicketFollow.imgUrlFollow = url;
+          newTicketFollow.isImgFollow = true;
+          ticketsFollowData.createTicketFollow(newTicketFollow)
+            .then()
+            .catch((err) => console.error(err));
+        } else {
+          newTicketFollow.imgUrl = '';
+          newTicketFollow.isImg = false;
+          ticketsFollowData.createTicketFollow(newTicketFollow)
+            .then()
+            .catch((err) => console.error(err));
+          console.warn('failure to upload ?? url is ', this.state.imageAsUrl);
+        }
+        // this.setState({ imageAsUrl: url });
+      });
+*/
+
+/*
+      const keysIWantFollow = [
+        'ticketNumber',
+        'uDate',
+        'replayName',
+        'description',
+        // 'imgUrlFollow',
+        // 'isImgFollow',
+        'uid',
+      ];
+      const newTicketFollow = _.pick(this.state, keysIWantFollow);
+      newTicketFollow.uid = authData.getUid();
+      newTicketFollow.ticketId = ticketId;
+      newTicketFollow.imgUrlFollow = this.state.myUrl;
+      newTicketFollow.isImgFollow = true;
+      ticketsFollowData.createTicketFollow(newTicketFollow)
+        .then()
+        .catch((err) => console.error(err));
+*/
+
+/*
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="Category">Category</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="category"
+                  placeholder={category}
+                  value={category}
+                  onChange={this.changeCategoryEvent}
+                  disabled
+                />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="assigntTo"><i class="fas fa-at"></i> Assignt To</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="assignTo"
+                  placeholder="Select to assign to"
+                  value={assignTo}
+                  onChange={this.changeAssignToEvent}
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
 */

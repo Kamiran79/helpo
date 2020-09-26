@@ -50,8 +50,8 @@ class Ticket extends React.Component {
             </div>
             <div className="row"></div>
             <Link to={singleTicketLink} className="btn btn-warning float-right"><i class="far fa-eye"></i></Link>
-            <h2>{ticket.subject} #{ticket.ticketNumber}</h2>
-            <h4 className="openDate">{openDate}</h4>
+            <h2><i class="far fa-lightbulb"></i> {ticket.subject} <i class="fas fa-barcode"></i> {ticket.ticketNumber}</h2>
+            <h4 className="openDate"><i class="fas fa-calendar-day"></i> {openDate}</h4>
           </div>
           <div className="card-body">
             <div className="row">
@@ -61,19 +61,19 @@ class Ticket extends React.Component {
               </div>
               <div className="col-md-2 my_col">
                 <p className="card-text my_header">assigned to</p>
-                <p className="card-text">{ticket.assignTo}</p>
+                <p className="card-text"><i class="fas fa-users-cog"></i> {ticket.assignTo}</p>
               </div>
               <div className="col-md-2 my_col">
                 <p className="card-text my_header">priority</p>
-                <p className="card-text">{ticket.priority}</p>
+                <p className="card-text"><i class="fas fa-exclamation-circle"></i> {ticket.priority}</p>
               </div>
               <div className="col-md-2 my_col">
                 <p className="card-text my_header">category</p>
-                <p className="card-title">{ticket.category}</p>
+                <p className="card-title"><i class="fas fa-puzzle-piece"></i> {ticket.category}</p>
               </div>
               <div className="col-md-2 my_col">
-                <p className="card-text my_header"><i class="fas fa-calendar-day"></i> Close Date</p>
-                <p className="card-text">{getFilterDate()}</p>
+                <p className="card-text my_header">Close Date</p>
+                <p className="card-text"><i class="fas fa-calendar-day"></i> {getFilterDate()}</p>
               </div>
             </div>
 

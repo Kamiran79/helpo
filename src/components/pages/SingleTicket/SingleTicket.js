@@ -14,6 +14,7 @@ import ticketsData from '../../../helpers/data/ticketsData';
 import './SingleTicket.scss';
 import ticketsFollowData from '../../../helpers/data/ticketsFollowData';
 import FollowTickets from '../../shared/FollowTickets/FollowTickets';
+import kbHubData from '../../../helpers/data/kbHubData';
 // import smashData from '../../../helpers/data/smashData';
 
 /*
@@ -85,15 +86,36 @@ const SingleTicket = (props) => {
     );
   };
 
+  const createKB = () => {
+    const kbObj = {
+      uid: ticket.uid,
+      topic: ticket.subject,
+      status: null,
+      department: ticket.assignTo,
+      oDate: new Date(),
+      isTicket: true,
+      imgUrl: ticket.imgUrl,
+      isImg: ticket.isImg,
+      authorTopic: ticket.author,
+      authorKB: 'Kamiran',
+    };
+    kbHubData.createKB(kbObj)
+      .then((res) => {
+        this.props.history.push(`/KBSingleT/${res.data.name}`);
+      })
+      .catch((err) => console.error('new KB broke', err));
+  };
+
   // const responseToTicket = 'responseTicket';
   const ticketsFollowCard = ticketsFollow.map((ticketFollow) => <FollowTickets key={ticketFollow.id} ticketFollow={ticketFollow}/>);
 
   return (
     <div className="SingleTicket mt-3 p-3 singleTicket_card rounded">
-      <h1 className="">Ticket Details</h1>
+      {ticket.isClose ? (<button disabled className="btn btn-primary float-right" onClick={createKB}> <i className="fas fa-random"></i> Convert to KB</button>) : (<button disabled className="btn btn-warning float-right"> <i className="fas fa-random"></i> Convert to KB</button>)}
+      <h1 className="singleTicket_title">Ticket Details</h1>
       {/* <br /><br /> */}
       <hr />
-      <h2 className="subject_singleTicket">{ticket.subject} #{ticket.ticketNumber}</h2>
+      <h2 className="subject_singleTicket"><i class="fas fa-lightbulb"></i> {ticket.subject} <i class="fas fa-barcode"></i> {ticket.ticketNumber}</h2>
       <Button className="float-left" color="light" id="toggler1" style={{ marginBottom: '1rem' }}>
         <i class="fas fa-caret-down"></i> Dates <i class="fas fa-calendar-alt"></i>
       </Button>
@@ -124,14 +146,14 @@ const SingleTicket = (props) => {
       </UncontrolledCollapse>
       <br />
       <br />
-      <h2 className="mt-3 details_singleTicket">Details:</h2>
+      <h2 className="mt-3 details_singleTicket"><i class="fas fa-file-alt"></i> Details:</h2>
       <hr />
       <div className="card shadow p-3 mb-3 bg-light rounded">
         <div className="card-body">
           <h5 className="card-title mb-1"><span className="fieldName_singleTicket bg-dark"><i class="fas fa-portrait"></i> Created By:</span> {ticket.author}</h5>
           <ul className="list-group list-group-flush">
             <li className="list-group-item"><span className="font-weight-bold"><i class="far fa-building"></i> Department:</span> {ticket.department}</li>
-            <li className="list-group-item"><span className="font-weight-bold">Category:</span> {ticket.category}</li>
+            <li className="list-group-item"><span className="font-weight-bold"><i class="fas fa-puzzle-piece"></i> Category:</span> {ticket.category}</li>
             <li className="list-group-item"><span className="font-weight-bold"><i class="fas fa-at"></i> Ticket Assigned to:</span> {ticket.assignTo}</li>
           </ul>
           <hr />
@@ -184,7 +206,6 @@ const SingleTicket = (props) => {
           <p className="card-text"></p>
         </div>  */}
       </div>
-      <h2>Subject </h2>
       <div>
         {ticketsFollowCard}
       </div>
