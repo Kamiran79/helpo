@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink as RRNavLink } from 'react-router-dom';
@@ -36,6 +37,12 @@ class MyNavbar extends React.Component {
 
   componentDidMount() {
     this.getUserObject();
+  }
+
+  loginClickEvent = (e) => {
+    e.preventDefault();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
   }
 
   logMeOut = (e) => {
@@ -83,7 +90,23 @@ class MyNavbar extends React.Component {
               <NavLink className="myNav" tag={RRNavLink} to="/kBase"><i class="fas fa-server"></i> Knowledge Base</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="myNav" onClick={this.logMeOut}> <i class="fas fa-sign-out-alt"></i></NavLink>
+              <NavLink className="myNav log_class" onClick={this.logMeOut}> <i class="fas fa-sign-out-alt"></i> Logout</NavLink>
+            </NavItem>
+          </Nav>
+        );
+      }
+      // <NavLink className="myNav" onClick={this.logMeOut} tag={RRNavLink}to="/auth"><i class="fas fa-user-circle"></i> <button className="btn btn-info" onClick={this.loginClickEvent}><i class="fab fa-google"></i> Login</button></NavLink>
+      if (!authed) {
+        return (
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink className="myNav" tag={RRNavLink} to="/auth"><i class="fas fa-home"></i> Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="myNav" tag={RRNavLink} to="/tickets/:link1"></NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="myNav log_class" onClick={this.loginClickEvent} > <i class="fas fa-user-circle"></i> Login </NavLink>
             </NavItem>
           </Nav>
         );
@@ -95,7 +118,7 @@ class MyNavbar extends React.Component {
     return (
       <div>
         <Navbar className="myNavbar" color="light" light expand="md">
-          <NavbarBrand className="myNav" href="/">HELPO</NavbarBrand>
+          <NavbarBrand className="myNav myLogoNav" href="/">iHELPO</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={isOpen} navbar>
             {buildNavbar()}

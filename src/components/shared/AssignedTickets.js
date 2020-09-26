@@ -6,7 +6,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
-  Button,
+  // Button,
 } from 'reactstrap';
 // import { Link } from 'react-router-dom';
 import Ticket from './Ticket';
@@ -146,11 +146,12 @@ class MyRealTickets extends React.Component {
     const ticketsCard = tickets.map((ticket) => <Ticket key={ticket.id} ticket={ticket} deleteTicket={this.deleteTicket}/>);
     return (
       <div className="MyRealTickets ">
-        <h2 className="shadow p-3 mb-3 rounded"> Assigned Tickets </h2>
+        <h2 className="shadow p-3 mb-3 rounded singleTicket_title"> Assigned Tickets </h2>
         {/* <button className="btn btn-info">I am a button</button> */}
         <ButtonGroup className="mb-2 shadow p-3 mb-3 rounded">
+          {/* <Link className="btn btn-primary" to='/newTicket'>New Ticket</Link>
           <Button className="btn btn-dark" onClick={this.newTicketEvent}>New Ticket</Button>
-          {/* <Link className="btn btn-primary" to='/newTicket'>New Ticket</Link> */}
+          */}
           {/* <Button>Filter</Button> */}
           <ButtonDropdown isOpen={this.state.dropdownOpen1} toggle={this.toggle1}>
             <DropdownToggle caret>

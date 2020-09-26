@@ -13,8 +13,9 @@ import Home from '../components/pages/Home/Home';
 import MyNavbar from '../components/pages/MyNavbar/MyNavbar';
 import Tickets from '../components/pages/Tickets/Tickets';
 import KBase from '../components/pages/KBase/KBase';
-import NewTicket1 from '../components/pages/NewTicket/NewTicket1';
-import NewTicket from '../components/shared/NewTicket';
+// import NewTicket1 from '../components/pages/NewTicket/NewTicket1';
+import NewTicket from '../components/pages/NewTicket/NewTicket';
+// import NewTicket from '../components/shared/NewTicket';
 
 import Admin from '../components/pages/Admin/Admin';
 
@@ -25,6 +26,10 @@ import fbConnection from '../helpers/data/connection';
 import './App.scss';
 import SingleTicket from '../components/pages/SingleTicket/SingleTicket';
 import ResponseTickets from '../components/pages/ResponseTickets/ResponseTickets';
+// import Land from '../components/pages/Land/Land';
+import KBnew from '../components/pages/KBnew/KBnew';
+import KBsingle from '../components/pages/KBsingle/KBsingle';
+import KBSteps from '../components/pages/KBSteps/KBSteps';
 
 fbConnection();
 
@@ -105,9 +110,12 @@ class App extends React.Component {
                 <PrivateRoute path="/kBase" component={KBase} authed={authed} />
                 <PrivateRoute path="/newTicket/:uid" component={NewTicket} authed={authed} />
                 <PrivateRoute path="/responseTicket/:ticketId" component={ResponseTickets} authed={authed} />
-                <PrivateRoute path="/new" component={NewTicket1} authed={authed} />
+                <PrivateRoute path="/kbSteps/:kbId" component={KBSteps} authed={authed} />
+                <PrivateRoute path="/newKB/:uid" component={KBnew} authed={authed} />
                 <PrivateRoute path="/singleTicket/:ticketId" component={SingleTicket} authed={authed} />
+                <PrivateRoute path="/singleKB/:kbId" component={KBsingle} authed={authed} />
                 <PrivateRoute path="/admin" component={Admin} authed={authed} />
+                {/* <PublicRoute path="/land" component={Land} authed={authed} /> */}
                 <PublicRoute path="/auth" component={Auth} authed={authed} />
                 <Redirect from="*" to="/home"/>
               </Switch>

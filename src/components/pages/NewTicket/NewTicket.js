@@ -8,13 +8,15 @@ import 'firebase/storage';
 import DatePicker from 'react-datepicker';
 import _ from 'underscore';
 // import authData from '../../helpers/data/authData';
-import usersData from '../../helpers/data/usersData';
+import usersData from '../../../helpers/data/usersData';
 // require the css for that datePicker below:
 import 'react-datepicker/dist/react-datepicker.css';
 
-import authData from '../../helpers/data/authData';
-import ticketsData from '../../helpers/data/ticketsData';
-import ticketNumberData from '../../helpers/data/ticketNumberData';
+import authData from '../../../helpers/data/authData';
+import ticketsData from '../../../helpers/data/ticketsData';
+import ticketNumberData from '../../../helpers/data/ticketNumberData';
+
+import './NewTicket.scss';
 // import ticketsFollowData from '../../helpers/data/ticketsFollowData';
 // import ticketsImgData from '../../helpers/data/ticketsImgData';
 // create new state for an empty object for that ticket.
@@ -147,31 +149,6 @@ class NewTicket extends React.Component {
               this.props.history.push(`/singleTicket/${res.data.name}`);
             })
             .catch((err) => console.error('new tickets broke', err));
-          // isImg = true;
-          // this.state.imageAsUrl((prevObject) => ({ ...prevObject, imgUrl: url }));
-          // this.allInput.imgUrl = url;
-          // imgUrl = url;
-          // this.setState({ imgUrl: url });
-          // this.setState({ isImg: true });
-          // console.warn('access to add object and url is ', this.state.imageAsUrl);
-          /*
-          const follow = 1;
-          const newTicketFollow = {
-            ticketId: '',
-            ticketNumber: this.state.ticketNumber,
-            uid: this.state.cUid,
-            followNumber: follow,
-            uDate: this.state.oDate,
-            responseName: this.state.author,
-            imgUrl: url,
-            isImg: true,
-            description: 'first attached file for the issue',
-            linkRef: 'this.state.imageAsUrl',
-          };
-          ticketsFollowData.createTicketFollow(newTicketFollow)
-            .then()
-            .catch((err) => console.error(err));
-          */
         } else {
           newTicket.imgUrl = '';
           newTicket.isImg = false;
@@ -223,53 +200,6 @@ class NewTicket extends React.Component {
     ticketNumberData.updateTicketNumber('ticketNumber1', ticketNumberUpdate)
       .then()
       .catch((err) => console.error('error to update number ', err));
-    /* ticketNumberData.createTicketNumber(ticketNumber)
-      .then((res) => {
-      })
-      .catch((err) => console.error('new tickets Number broke', err)); */
-    // pass that to a data function
-
-    // do something on save?
-    // console.warn('what is in myImages have: ', this.myImges);
-    // console.warn('access to add object and url is ', this.allInput);
-    // const { imgUrl } = this.state;
-    // if (imgUrl !== '') {
-    // const imgUrl = this.allInput.imgUrl1;
-    // this.setState({ imgUrl });
-    // const isImg = true;
-    // this.setState({ isImg });
-    //  console.warn('image updated', imgUrl);
-    // }
-    // console.warn('image updated', imgUrl);
-    /*
-    const keysIWant = [
-      'ticketNumber',
-      'cUid',
-      'oDate',
-      'cDate',
-      'uDate',
-      'author',
-      'department',
-      'category',
-      // 'toAddress',
-      'assignTo',
-      'subject',
-      'details',
-      'status',
-      'priority',
-      'dDate',
-      'resolution',
-    ];
-
-    const newTicket = _.pick(this.state, keysIWant);
-    newTicket.uid = authData.getUid();
-
-    ticketsData.createTicket(newTicket)
-      .then((res) => {
-        this.props.history.push(`/singleTicket/${res.data.name}`);
-      })
-      .catch((err) => console.error('new tickets broke', err));
-    */
   };
 
   componentDidMount() {
@@ -340,14 +270,14 @@ class NewTicket extends React.Component {
 
     return (
       <div className="NewTicket col-12">
-        <h2 className="float-left">New Ticket</h2>
-        <h2 className="float-right">Ticket Details</h2>
+        <h2 className="float-left singleTicket_title">New Ticket</h2>
+        <h2 className="float-right singleTicket_title">Ticket Details</h2>
         <br />
         <hr />
         <form className="col-8 offset-2 shadow p-3 bg-primary mb-3 rounded">
           <div class="form-row mt-5">
             <div class="form-group col-md-6">
-              <label htmlFor="oDate"><i class="fas fa-calendar-alt"></i> Open Date: {'  '}</label>
+              <label htmlFor="oDate"><i class="fas fa-calendar-alt"></i> Open Date: {' '} </label>
               <DatePicker
                 class="form-control"
                 selected={oDate}
@@ -356,7 +286,7 @@ class NewTicket extends React.Component {
               />
             </div>
             <div class="form-group col-md-6">
-              <label htmlFor="cDate"><i class="fas fa-calendar-alt"></i> Close Date: {'  '}</label>
+              <label htmlFor="cDate"><i class="fas fa-calendar-alt"></i> Close Date: {' '} </label>
               <DatePicker
                 class="form-control"
                 onChange={this.cDateEvent}
@@ -366,30 +296,35 @@ class NewTicket extends React.Component {
             </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="author"><i class="fas fa-portrait"></i> Created By</label>
-            <input
-              type="text"
-              className="form-control"
-              id="author"
-              placeholder={author}
-              value={author}
-              onChange={this.changeAuthorEvent}
-              disabled
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="department"><i class="far fa-building"></i> Department</label>
-            <input
-              type="text"
-              className="form-control"
-              id="department"
-              placeholder="Enter Department"
-              value={department}
-              onChange={this.changeDepartmentEvent}
-              disabled
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="author"><i class="fas fa-portrait"></i> Created By</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="author"
+                  placeholder={author}
+                  value={author}
+                  onChange={this.changeAuthorEvent}
+                  disabled
+                />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="department"><i class="far fa-building"></i> Department</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="department"
+                  placeholder="Enter Department"
+                  value={department}
+                  onChange={this.changeDepartmentEvent}
+                  disabled
+                />
+              </div>
+            </div>
           </div>
           {/*
           <div class="form-group">
@@ -407,21 +342,46 @@ class NewTicket extends React.Component {
             </select>
           </div>
           */}
-
-          <div className="form-group">
-            <label htmlFor="Category">Category</label>
-            <select
-              value={forCategory}
-              onChange={this.changeCategoryEvent}
-              className="form-control"
-              id="category"
-              required>
-              <option>Please Select a Category</option>
-              <option value='Web'>Web</option>
-              <option value='Application'>Application</option>
-              <option value='Systems'>Systems</option>
-              <option value='Others'>Others</option>
-            </select>
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="Category"><i class="fas fa-puzzle-piece"></i> Category</label>
+                <select
+                  value={forCategory}
+                  onChange={this.changeCategoryEvent}
+                  className="form-control"
+                  id="category"
+                  required>
+                  <option>Please Select a Category</option>
+                  <option value='Web'>Web</option>
+                  <option value='Application'>Application</option>
+                  <option value='Systems'>Systems</option>
+                  <option value='Others'>Others</option>
+                </select>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="Assign To"><i class="fas fa-at"></i> Assign To</label>
+                <select
+                  value={forAssignTo}
+                  onChange={this.changeAssignToEvent}
+                  className="form-control"
+                  id="toAddress"
+                  required>
+                  <option>Please Select a Options Below:</option>
+                  <option value='IT'>IT</option>
+                  <option value='E11'>E11</option>
+                  <option value='E12'>E12</option>
+                  <option value='E13'>E13</option>
+                  <option value='Developer'>Developer</option>
+                  <option value='Accounting'>Accounting</option>
+                  <option value='Engineering'>Engineering</option>
+                  <option value='Myself'>MySelf</option>
+                  <option value='Others'>Others</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           {/* Disabled to address same as assign to
@@ -439,26 +399,6 @@ class NewTicket extends React.Component {
             </select>
           </div>
           */}
-
-          <div className="form-group">
-            <label htmlFor="Assign To"><i class="fas fa-at"></i> Assign To</label>
-            <select
-              value={forAssignTo}
-              onChange={this.changeAssignToEvent}
-              className="form-control"
-              id="toAddress">
-              <option>Please Select a Options Below:</option>
-              <option value='IT'>IT</option>
-              <option value='E11'>E11</option>
-              <option value='E12'>E12</option>
-              <option value='E13'>E13</option>
-              <option value='Developer'>Developer</option>
-              <option value='Accounting'>Accounting</option>
-              <option value='Engineering'>Engineering</option>
-              <option value='Myself'>MySelf</option>
-              <option value='Others'>Others</option>
-            </select>
-          </div>
 
           <div className="form-group">
             <label htmlFor="Subject"><i class="fab fa-ethereum"></i> Subject</label>
@@ -481,35 +421,42 @@ class NewTicket extends React.Component {
               rows="3"
               placeholder="explain the details issue"
               value={details}
-              onChange={this.changeDetailsEvent}>
+              onChange={this.changeDetailsEvent}
+              required>
             </textarea>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="status"><i class="fas fa-shield-alt"></i> status</label>
-            <input
-              type="text"
-              className="form-control"
-              id="status"
-              placeholder="Change the status"
-              value={status}
-              onChange={this.changeStatusEvent}
-              disabled
-            />
-          </div>
-
-          <div class="form-group">
-            <label htmlFor="priority">Priority</label>
-            <select
-              value={forPriority}
-              onChange={this.changePriorityEvent}
-              class="form-control"
-              id="priority">
-              <option>Please Select a Priority</option>
-              <option value='Low'>Low</option>
-              <option value='Meduim'>Meduim</option>
-              <option value='High'>High</option>
-            </select>
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="status"><i class="fas fa-shield-alt"></i> status</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="status"
+                  placeholder="Change the status"
+                  value={status}
+                  onChange={this.changeStatusEvent}
+                  disabled
+                />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div class="form-group">
+                <label htmlFor="priority"><i class="fas fa-exclamation-circle"></i> Priority</label>
+                <select
+                  value={forPriority}
+                  onChange={this.changePriorityEvent}
+                  class="form-control"
+                  id="priority"
+                  required>
+                  <option>Please Select a Priority</option>
+                  <option value='Low'>Low</option>
+                  <option value='Meduim'>Meduim</option>
+                  <option value='High'>High</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           <div className="form-group">

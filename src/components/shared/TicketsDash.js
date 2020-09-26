@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from 'react-bootstrap/Card';
+// import Card from 'react-bootstrap/Card';
 // import { Button, CardTitle, CardText, Row, Col } from 'bootstrap';
 import Chart from 'react-apexcharts';
 
@@ -13,6 +13,7 @@ class TicketsDash extends React.Component {
     new: PropTypes.number.isRequired,
     open: PropTypes.number.isRequired,
     resolved: PropTypes.number.isRequired,
+    pending: PropTypes.number.isRequired,
   }
 
   getAllTickets = () => {
@@ -57,7 +58,7 @@ class TicketsDash extends React.Component {
       })
       .catch((err) => console.error('get tickets broke!!', err));
     this.state = {
-      series: [this.props.resolved, this.props.open, 0, this.props.new],
+      series: [this.props.resolved, this.props.open, this.props.pending, this.props.new],
       options: {
         chart: {
           width: 380,
@@ -82,7 +83,7 @@ class TicketsDash extends React.Component {
           width: 380,
           type: 'pie',
         },
-        labels: ['Open', 'Resolved', 'Pending', 'New'],
+        labels: ['Meduim', 'Low', 'High', 'Urgent'],
         responsive: [{
           breakpoint: 480,
           options: {
@@ -108,7 +109,7 @@ class TicketsDash extends React.Component {
                 <div class="card-body">
                   <h5 class="card-title">Tickets by Status</h5>
                   <Chart options={this.state.options} series={this.state.series} type="pie" width={500} height={320} />
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <p class="card-text"></p>
 
                 </div>
               </div>
@@ -118,13 +119,21 @@ class TicketsDash extends React.Component {
                 <div class="card-body">
                   <h5 class="card-title">Tickets by Priority</h5>
                   <Chart options={this.state.options2} series={this.state.series2} type="pie" width={500} height={320} />
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <p class="card-text"></p>
 
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    );
+  }
+}
+
+export default TicketsDash;
+
+/*
         <Card>
           <Card.Header>Tickets by All Groups (Departments)</Card.Header>
           <Card.Body>
@@ -134,18 +143,12 @@ class TicketsDash extends React.Component {
               </div>
               <p>
                 {' '}
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                erat a ante.{' '}
+                {' '}
               </p>
               <footer className="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
+                 <cite title="Source Title"></cite>
               </footer>
             </blockquote>
           </Card.Body>
         </Card>
-      </div>
-    );
-  }
-}
-
-export default TicketsDash;
+*/
