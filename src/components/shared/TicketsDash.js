@@ -58,7 +58,7 @@ class TicketsDash extends React.Component {
       })
       .catch((err) => console.error('get tickets broke!!', err));
     this.state = {
-      series: [this.props.resolved, this.props.open, this.props.pending, this.props.new],
+      series: [this.props.open, this.props.resolved, this.props.pending, this.props.new],
       options: {
         chart: {
           width: 380,
